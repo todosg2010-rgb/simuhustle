@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimuHustle | Run Your 6-Month Simulation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8B5CF6;
+            --secondary: #06B6D4;
+            --accent: #F97316;
+            --base: #020204;
+            --surface: #0a0a12;
+            --surface-2: #151520;
+            --text: #ffffff;
+            --text-muted: #6b6b7b;
+            --glow: rgba(139, 92, 246, 0.5);
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--base);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Background Effects */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 25s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float-up 15s infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 18s; background: var(--secondary); }
+        .particle:nth-child(3) { left: 35%; animation-delay: 4s; animation-duration: 14s; }
+        .particle:nth-child(4) { left: 50%; animation-delay: 1s; animation-duration: 20s; background: var(--accent); }
+        .particle:nth-child(5) { left: 65%; animation-delay: 3s; animation-duration: 16s; background: var(--secondary); }
+        .particle:nth-child(6) { left: 80%; animation-delay: 5s; animation-duration: 13s; }
+        .particle:nth-child(7) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; background: var(--accent); }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        .aurora {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+            filter: blur(80px);
+            animation: auroraShift 20s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+            50% { transform: translate(50px, -50px) scale(1.2) rotate(5deg); opacity: 0.7; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 2, 4, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3)); }
+            50% { filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.6)); }
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.4s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: inherit;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #ea580c);
+            color: white;
+            box-shadow: 0 4px 30px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 50px rgba(249, 115, 22, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--primary);
+        }
+
+        .btn-toggle {
+            background: var(--surface);
+            color: var(--text-muted);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            padding: 1rem 2rem;
+            font-weight: 700;
+        }
+
+        .btn-toggle.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 5% 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+
+        /* Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Single Mode Form */
+        .simulation-form {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simulation-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(2, 2, 4, 0.6);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .scenario-selector {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .scenario-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 1rem;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(2, 2, 4, 0.6);
+            color: var(--text-muted);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            font-weight: 600;
+        }
+
+        .scenario-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .scenario-btn:hover:not(.active) {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .generate-btn {
+            width: 100%;
+            margin-top: 2rem;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--accent), #ea580c);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.4);
+        }
+
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .dynamic-field {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Compare Mode */
+        .compare-container {
+            display: none;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .compare-container.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        @media (max-width: 968px) {
+            .compare-container.active {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-side {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .compare-side.a-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .compare-side.b-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--danger));
+        }
+
+        .compare-side h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .compare-side.a-side h3 {
+            color: var(--secondary);
+        }
+
+        .compare-side.b-side h3 {
+            color: var(--accent);
+        }
+
+        .vs-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+            z-index: 10;
+        }
+
+        @media (max-width: 968px) {
+            .vs-badge {
+                display: none;
+            }
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--base);
+            z-index: 9999;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loading-screen.active {
+            display: flex;
+        }
+
+        .loading-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .loading-particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: loadingFloat 3s infinite;
+        }
+
+        @keyframes loadingFloat {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-100px) scale(1.5); opacity: 1; }
+        }
+
+        .loading-core {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .loading-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 3px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-ring:nth-child(1) { width: 200px; height: 200px; animation-duration: 1s; border-width: 4px; }
+        .loading-ring:nth-child(2) { width: 160px; height: 160px; border-top-color: var(--secondary); animation-duration: 1.5s; animation-direction: reverse; border-width: 3px; }
+        .loading-ring:nth-child(3) { width: 120px; height: 120px; border-top-color: var(--accent); animation-duration: 2s; border-width: 2px; }
+        .loading-ring:nth-child(4) { width: 80px; height: 80px; border-top-color: var(--primary); animation-duration: 0.8s; animation-direction: reverse; border-width: 3px; }
+
+        @keyframes spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            animation: pulse-text 1.5s infinite;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading-subtext {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .loading-progress {
+            width: 400px;
+            height: 6px;
+            background: rgba(139, 92, 246, 0.2);
+            border-radius: 3px;
+            margin-top: 2rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 100%;
+            border-radius: 3px;
+            animation: progress 6s ease-out, shimmer 2s infinite;
+            width: 100%;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 100% 0; }
+            100% { background-position: -100% 0; }
+        }
+
+        .loading-stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .loading-stat {
+            text-align: center;
+        }
+
+        .loading-stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+        }
+
+        .loading-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .results-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Analysis Card */
+        .analysis-card {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analysis-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .analysis-card.success::before {
+            background: linear-gradient(90deg, var(--success), #34d399);
+        }
+
+        .analysis-card.warning::before {
+            background: linear-gradient(90deg, var(--warning), #fbbf24);
+        }
+
+        .analysis-card.danger::before {
+            background: linear-gradient(90deg, var(--danger), #f87171);
+        }
+
+        .analysis-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .analysis-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
+            border: 2px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .analysis-card.success .analysis-icon {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.2));
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .analysis-card.warning .analysis-icon {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2));
+            border-color: var(--warning);
+            color: var(--warning);
+        }
+
+        .analysis-card.danger .analysis-icon {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.2));
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .analysis-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .analysis-text {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .analysis-factors {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .analysis-factor {
+            text-align: center;
+        }
+
+        .analysis-factor-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-factor-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .analysis-factor-value.positive { color: var(--success); }
+        .analysis-factor-value.negative { color: var(--danger); }
+        .analysis-factor-value.warning { color: var(--warning); }
+
+        /* Summary Cards */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s;
+            animation: cardFloat 4s ease-in-out infinite;
+        }
+
+        .summary-card:nth-child(1) { animation-delay: 0s; }
+        .summary-card:nth-child(2) { animation-delay: 0.5s; }
+        .summary-card:nth-child(3) { animation-delay: 1s; }
+        .summary-card:nth-child(4) { animation-delay: 1.5s; }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .summary-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .summary-card.positive::before {
+            background: linear-gradient(90deg, var(--success), #34d399);
+        }
+
+        .summary-card.negative::before {
+            background: linear-gradient(90deg, var(--danger), #f87171);
+        }
+
+        .summary-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .summary-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+        }
+
+        .summary-value.positive { color: var(--success); }
+        .summary-value.negative { color: var(--danger); }
+
+        /* Monthly Table */
+        .monthly-section {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .monthly-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.1), transparent 50%);
+            pointer-events: none;
+        }
+
+        .monthly-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 700;
+        }
+
+        .monthly-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .monthly-table th {
+            text-align: left;
+            padding: 1.2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .monthly-table td {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s;
+        }
+
+        .monthly-table tr:hover td {
+            background: rgba(139, 92, 246, 0.05);
+            transform: scale(1.01);
+        }
+
+        .monthly-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .month-cell {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .profit-positive {
+            color: var(--success);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .profit-negative {
+            color: var(--danger);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Compare Results */
+        .compare-results {
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .compare-results.active {
+            display: block;
+        }
+
+        .winner-banner {
+            background: linear-gradient(135deg, var(--success), #34d399);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            animation: winnerPulse 2s infinite;
+        }
+
+        @keyframes winnerPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 80px rgba(16, 185, 129, 0.5); }
+        }
+
+        .winner-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .winner-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .winner-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-top: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .compare-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 968px) {
+            .compare-dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .compare-result-side {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 2px solid rgba(139, 92, 246, 0.2);
+            border-radius: 24px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .compare-result-side.winner {
+            border-color: var(--success);
+            box-shadow: 0 0 60px rgba(16, 185, 129, 0.2);
+        }
+
+        .compare-result-side.loser {
+            border-color: rgba(139, 92, 246, 0.2);
+            opacity: 0.9;
+        }
+
+        .compare-result-side h4 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .compare-result-side.winner h4 {
+            color: var(--success);
+        }
+
+        .compare-result-side.loser h4 {
+            color: var(--text-muted);
+        }
+
+        .vs-divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+            z-index: 10;
+        }
+
+        @media (max-width: 968px) {
+            .vs-divider {
+                display: none;
+            }
+        }
+
+        .compare-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .compare-metric {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(2, 2, 4, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .compare-metric-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .compare-metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .compare-metric-value.positive { color: var(--success); }
+        .compare-metric-value.negative { color: var(--danger); }
+
+        .why-won {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .why-won h5 {
+            color: var(--success);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .why-won p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .why-lost {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .why-lost h5 {
+            color: var(--danger);
+            font-size: 1.1rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .why-lost p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Share Modal */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 2, 4, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-modal.active {
+            display: flex;
+        }
+
+        .share-content {
+            background: linear-gradient(135deg, var(--surface), var(--surface-2));
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            border-radius: 32px;
+            padding: 3rem;
+            max-width: 700px;
+            width: 90%;
+            position: relative;
+            animation: scaleIn 0.4s ease-out;
+            box-shadow: 0 0 100px rgba(139, 92, 246, 0.3);
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .share-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .share-header h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .share-header p {
+            color: var(--text-muted);
+        }
+
+        .share-preview {
+            background: var(--base);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            font-size: 0.75rem;
+            color: rgba(139, 92, 246, 0.6);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transform: rotate(-5deg);
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .share-btn {
+            flex: 1;
+            padding: 1.2rem;
+            border-radius: 16px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: inherit;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .share-btn.primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .share-btn.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid rgba(139, 92, 246, 0.4);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .copied-toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, var(--success), #34d399);
+            color: white;
+            padding: 1.2rem 2.5rem;
+            border-radius: 16px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: all 0.4s;
+            z-index: 10001;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .copied-toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .analysis-factors {
+                grid-template-columns: 1fr;
+            }
+            
+            .monthly-table {
+                font-size: 0.85rem;
+            }
+            
+            .monthly-table th,
+            .monthly-table td {
+                padding: 0.8rem 0.5rem;
+            }
+            
+            .loading-progress {
+                width: 300px;
+            }
+            
+            .loading-stats {
+                gap: 2rem;
+            }
+
+            .compare-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="aurora"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo">SimuHustle</a>
+        <div class="nav-links">
+            <a href="/" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Run Your Simulation</h1>
+            <p>Single hustle deep-dive or compare two side-by-side</p>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="mode-toggle">
+            <button class="btn-toggle active" id="singleModeBtn" onclick="setMode('single')">Single Hustle</button>
+            <button class="btn-toggle" id="compareModeBtn" onclick="setMode('compare')">Compare Hustles</button>
+        </div>
+
+        <!-- Single Mode Form -->
+        <form class="simulation-form" id="singleForm">
+            <div class="form-grid">
+                <div class="form-group full-width">
+                    <label>Select Hustle</label>
+                    <select name="hustle" id="singleHustle" required>
+                        <option value="">Choose your hustle...</option>
+                        <option value="dropshipping">Dropshipping</option>
+                        <option value="print_on_demand">Print on Demand</option>
+                        <option value="amazon_fba">Amazon FBA</option>
+                        <option value="etsy_store">Etsy Store</option>
+                        <option value="digital_products">Digital Products</option>
+                        <option value="online_course">Online Course</option>
+                        <option value="newsletter">Newsletter</option>
+                        <option value="affiliate_marketing">Affiliate Marketing</option>
+                        <option value="micro_saas">Micro SaaS</option>
+                        <option value="agency">Agency</option>
+                        <option value="content_creator">Content Creator</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Weekly Hours</label>
+                    <input type="number" name="weekly_hours" min="1" max="80" placeholder="e.g., 20" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Starting Capital ($)</label>
+                    <input type="number" name="starting_capital" min="0" placeholder="e.g., 1000" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Skill Level (1-5)</label>
+                    <input type="number" name="skill_level" min="1" max="5" placeholder="3 = average" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Ad Budget/Month ($)</label>
+                    <input type="number" name="ad_budget_per_month" min="0" placeholder="e.g., 500" required>
+                </div>
+
+                <div id="singleDynamicFields" class="form-grid full-width" style="display: contents;"></div>
+
+                <div class="form-group full-width">
+                    <label>Scenario</label>
+                    <div class="scenario-selector">
+                        <button type="button" class="scenario-btn active" data-value="base">Base Case</button>
+                        <button type="button" class="scenario-btn" data-value="best">Best Case</button>
+                        <button type="button" class="scenario-btn" data-value="worst">Worst Case</button>
+                    </div>
+                    <input type="hidden" name="scenario" value="base">
+                </div>
+            </div>
+
+            <button type="submit" class="generate-btn">Generate 6-Month Projection</button>
+        </form>
+
+        <!-- Compare Mode Forms -->
+        <div class="compare-container" id="compareContainer">
+            <div class="compare-side a-side">
+                <h3>HUSTLE A</h3>
+                <form id="compareFormA">
+                    <div class="form-group full-width">
+                        <label>Select Hustle</label>
+                        <select name="hustle" id="hustleA" required>
+                            <option value="">Choose hustle A...</option>
+                            <option value="dropshipping">Dropshipping</option>
+                            <option value="print_on_demand">Print on Demand</option>
+                            <option value="amazon_fba">Amazon FBA</option>
+                            <option value="etsy_store">Etsy Store</option>
+                            <option value="digital_products">Digital Products</option>
+                            <option value="online_course">Online Course</option>
+                            <option value="newsletter">Newsletter</option>
+                            <option value="affiliate_marketing">Affiliate Marketing</option>
+                            <option value="micro_saas">Micro SaaS</option>
+                            <option value="agency">Agency</option>
+                            <option value="content_creator">Content Creator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Weekly Hours</label>
+                        <input type="number" name="weekly_hours" min="1" max="80" placeholder="e.g., 20" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Starting Capital ($)</label>
+                        <input type="number" name="starting_capital" min="0" placeholder="e.g., 1000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skill Level (1-5)</label>
+                        <input type="number" name="skill_level" min="1" max="5" placeholder="3 = average" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ad Budget/Month ($)</label>
+                        <input type="number" name="ad_budget_per_month" min="0" placeholder="e.g., 500" required>
+                    </div>
+
+                    <div id="dynamicFieldsA" class="form-grid full-width" style="display: contents;"></div>
+
+                    <div class="form-group full-width">
+                        <label>Scenario</label>
+                        <div class="scenario-selector">
+                            <button type="button" class="scenario-btn active" data-target="a" data-value="base">Base</button>
+                            <button type="button" class="scenario-btn" data-target="a" data-value="best">Best</button>
+                            <button type="button" class="scenario-btn" data-target="a" data-value="worst">Worst</button>
+                        </div>
+                        <input type="hidden" name="scenario" value="base">
+                    </div>
+                </form>
+            </div>
+
+            <div class="vs-badge">VS</div>
+
+            <div class="compare-side b-side">
+                <h3>HUSTLE B</h3>
+                <form id="compareFormB">
+                    <div class="form-group full-width">
+                        <label>Select Hustle</label>
+                        <select name="hustle" id="hustleB" required>
+                            <option value="">Choose hustle B...</option>
+                            <option value="dropshipping">Dropshipping</option>
+                            <option value="print_on_demand">Print on Demand</option>
+                            <option value="amazon_fba">Amazon FBA</option>
+                            <option value="etsy_store">Etsy Store</option>
+                            <option value="digital_products">Digital Products</option>
+                            <option value="online_course">Online Course</option>
+                            <option value="newsletter">Newsletter</option>
+                            <option value="affiliate_marketing">Affiliate Marketing</option>
+                            <option value="micro_saas">Micro SaaS</option>
+                            <option value="agency">Agency</option>
+                            <option value="content_creator">Content Creator</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Weekly Hours</label>
+                        <input type="number" name="weekly_hours" min="1" max="80" placeholder="e.g., 20" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Starting Capital ($)</label>
+                        <input type="number" name="starting_capital" min="0" placeholder="e.g., 1000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skill Level (1-5)</label>
+                        <input type="number" name="skill_level" min="1" max="5" placeholder="3 = average" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ad Budget/Month ($)</label>
+                        <input type="number" name="ad_budget_per_month" min="0" placeholder="e.g., 500" required>
+                    </div>
+
+                    <div id="dynamicFieldsB" class="form-grid full-width" style="display: contents;"></div>
+
+                    <div class="form-group full-width">
+                        <label>Scenario</label>
+                        <div class="scenario-selector">
+                            <button type="button" class="scenario-btn active" data-target="b" data-value="base">Base</button>
+                            <button type="button" class="scenario-btn" data-target="b" data-value="best">Best</button>
+                            <button type="button" class="scenario-btn" data-target="b" data-value="worst">Worst</button>
+                        </div>
+                        <input type="hidden" name="scenario" value="base">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <button type="button" class="generate-btn" id="compareGenerateBtn" style="display: none;" onclick="runComparison()">Run Head-to-Head Comparison</button>
+
+        <!-- Single Results -->
+        <div class="results-section" id="singleResults">
+            <div class="results-header">
+                <h2>Your Simulation Results</h2>
+                <div class="results-actions">
+                    <button class="btn btn-secondary" onclick="newSimulation()">New Simulation</button>
+                    <button class="btn btn-primary" onclick="openShare()">Share Results</button>
+                </div>
+            </div>
+
+            <div class="analysis-card" id="analysisCard">
+                <div class="analysis-header">
+                    <div class="analysis-icon" id="analysisIcon">?</div>
+                    <div>
+                        <div class="analysis-title" id="analysisTitle">Analysis</div>
+                    </div>
+                </div>
+                <div class="analysis-text" id="analysisText">Running analysis...</div>
+                <div class="analysis-factors" id="analysisFactors"></div>
+            </div>
+
+            <div class="summary-cards" id="summaryCards"></div>
+
+            <div class="monthly-section">
+                <h3>Month-by-Month Breakdown</h3>
+                <table class="monthly-table">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Traffic</th>
+                            <th>Customers</th>
+                            <th>Revenue</th>
+                            <th>Expenses</th>
+                            <th>Net Profit</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Compare Results -->
+        <div class="compare-results" id="compareResults">
+            <div class="results-header">
+                <h2>Head-to-Head Results</h2>
+                <div class="results-actions">
+                    <button class="btn btn-secondary" onclick="newComparison()">New Comparison</button>
+                    <button class="btn btn-primary" onclick="openShareCompare()">Share Results</button>
+                </div>
+            </div>
+
+            <div class="winner-banner" id="winnerBanner">
+                <div class="winner-title" id="winnerTitle">Winner Loading...</div>
+                <div class="winner-subtitle" id="winnerSubtitle">Calculating advantages...</div>
+            </div>
+
+            <div class="compare-dashboard" id="compareDashboard">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-particles" id="loadingParticles"></div>
+        <div class="loading-core">
+            <div class="loading-ring"></div>
+            <div class="loading-ring"></div>
+            <div class="loading-ring"></div>
+            <div class="loading-ring"></div>
+        </div>
+        <div class="loading-text" id="loadingText">Running Simulation...</div>
+        <div class="loading-subtext" id="loadingSubtext">Analyzing market conditions</div>
+        <div class="loading-progress">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-stats">
+            <div class="loading-stat">
+                <span class="loading-stat-value" id="statScenarios">0</span>
+                <span class="loading-stat-label">Scenarios</span>
+            </div>
+            <div class="loading-stat">
+                <span class="loading-stat-value" id="statMonths">0</span>
+                <span class="loading-stat-label">Months</span>
+            </div>
+            <div class="loading-stat">
+                <span class="loading-stat-value" id="statVariables">11</span>
+                <span class="loading-stat-label">Variables</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-content">
+            <button class="close-modal" onclick="closeShare()">×</button>
+            <div class="share-header">
+                <h3>Share Your Results</h3>
+                <p>Copy and share with friends or on social media</p>
+            </div>
+            <div class="share-preview" id="sharePreview">
+                <span class="watermark">SIMUHUSTLE.COM</span>
+            </div>
+            <div class="share-buttons">
+                <button class="share-btn primary" onclick="copyResults()">Copy to Clipboard</button>
+                <button class="share-btn secondary" onclick="closeShare()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copied Toast -->
+    <div class="copied-toast" id="copiedToast">Copied to clipboard!</div>
+
+    <script>
+        // Hustle configurations
+        const hustleConfigs = {
+            dropshipping: {
+                fields: [
+                    { name: 'price', label: 'Product Price ($)', placeholder: 'e.g., 29.99' },
+                    { name: 'cost', label: 'Product Cost ($)', placeholder: 'e.g., 8.00' }
+                ]
+            },
+            print_on_demand: {
+                fields: [
+                    { name: 'price', label: 'Product Price ($)', placeholder: 'e.g., 25.00' },
+                    { name: 'cost', label: 'Base Cost ($)', placeholder: 'e.g., 12.00' }
+                ]
+            },
+            amazon_fba: {
+                fields: [
+                    { name: 'price', label: 'Selling Price ($)', placeholder: 'e.g., 34.99' },
+                    { name: 'cost', label: 'Landed Cost ($)', placeholder: 'e.g., 15.00' }
+                ]
+            },
+            etsy_store: {
+                fields: [
+                    { name: 'price', label: 'Item Price ($)', placeholder: 'e.g., 19.99' },
+                    { name: 'cost', label: 'Materials Cost ($)', placeholder: 'e.g., 5.00' }
+                ]
+            },
+            digital_products: {
+                fields: [
+                    { name: 'price', label: 'Product Price ($)', placeholder: 'e.g., 19.00' },
+                    { name: 'cost', label: 'Platform Fee (%)', placeholder: 'e.g., 0.05 for 5%' }
+                ]
+            },
+            online_course: {
+                fields: [
+                    { name: 'price', label: 'Course Price ($)', placeholder: 'e.g., 97.00' },
+                    { name: 'cost', label: 'Platform Fee (%)', placeholder: 'e.g., 0.1 for 10%' }
+                ]
+            },
+            newsletter: {
+                fields: [
+                    { name: 'price', label: 'Monthly Price ($)', placeholder: 'e.g., 10.00' },
+                    { name: 'cost', label: 'Platform Cost/Sub ($)', placeholder: 'e.g., 0.50' }
+                ]
+            },
+            affiliate_marketing: {
+                fields: [
+                    { name: 'price', label: 'Avg Product Price ($)', placeholder: 'e.g., 100.00' },
+                    { name: 'cost', label: 'Commission Rate (%)', placeholder: 'e.g., 0.3 for 30%' }
+                ]
+            },
+            micro_saas: {
+                fields: [
+                    { name: 'price', label: 'Monthly Price ($)', placeholder: 'e.g., 29.00' },
+                    { name: 'cost', label: 'Server Cost/Customer ($)', placeholder: 'e.g., 2.00' }
+                ]
+            },
+            agency: {
+                fields: [
+                    { name: 'price', label: 'Monthly Retainer ($)', placeholder: 'e.g., 1500.00' },
+                    { name: 'cost', label: 'Service Delivery Cost (%)', placeholder: 'e.g., 0.2 for 20%' }
+                ]
+            },
+            content_creator: {
+                fields: [
+                    { name: 'price', label: 'Avg Deal Value ($)', placeholder: 'e.g., 500.00' },
+                    { name: 'cost', label: 'Content Production Cost ($)', placeholder: 'e.g., 50.00' }
+                ]
+            }
+        };
+
+        let currentMode = 'single';
+
+        // Mode switching
+        function setMode(mode) {
+            currentMode = mode;
+            document.getElementById('singleModeBtn').classList.toggle('active', mode === 'single');
+            document.getElementById('compareModeBtn').classList.toggle('active', mode === 'compare');
+            
+            document.getElementById('singleForm').style.display = mode === 'single' ? 'block' : 'none';
+            document.getElementById('compareContainer').classList.toggle('active', mode === 'compare');
+            document.getElementById('compareGenerateBtn').style.display = mode === 'compare' ? 'block' : 'none';
+            
+            // Hide results when switching
+            document.getElementById('singleResults').classList.remove('active');
+            document.getElementById('compareResults').classList.remove('active');
+        }
+
+        // Dynamic field generation
+        function setupDynamicFields(hustleSelectId, containerId) {
+            document.getElementById(hustleSelectId).addEventListener('change', function() {
+                const hustle = this.value;
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                if (hustle && hustleConfigs[hustle]) {
+                    const config = hustleConfigs[hustle];
+                    config.fields.forEach((field, index) => {
+                        const div = document.createElement('div');
+                        div.className = 'form-group dynamic-field';
+                        div.style.animationDelay = `${index * 0.1}s`;
+                        div.innerHTML = `
+                            <label>${field.label}</label>
+                            <input type="number" name="${field.name}" min="0" step="0.01" placeholder="${field.placeholder}" required>
+                        `;
+                        container.appendChild(div);
+                    });
+                }
+            });
+        }
+
+        setupDynamicFields('singleHustle', 'singleDynamicFields');
+        setupDynamicFields('hustleA', 'dynamicFieldsA');
+        setupDynamicFields('hustleB', 'dynamicFieldsB');
+
+        // Scenario selectors
+        document.querySelectorAll('.scenario-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = this.dataset.target;
+                const parent = this.closest('.scenario-selector');
+                parent.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                parent.nextElementSibling.value = this.dataset.value;
+            });
+        });
+
+        // Single form submission
+        document.getElementById('singleForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await runSimulation('single', this);
+        });
+
+        async function runSimulation(type, form) {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.add('active');
+            createLoadingParticles();
+            animateLoadingStats();
+            
+            document.getElementById('loadingText').textContent = type === 'compare' ? 'Running Dual Simulation...' : 'Running Monte Carlo Simulation...';
+            document.getElementById('loadingSubtext').textContent = type === 'compare' ? 'Analyzing 200 scenarios across both hustles' : 'Analyzing 100 scenarios across 6 months';
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            ['weekly_hours', 'skill_level', 'starting_capital', 'ad_budget_per_month', 'price', 'cost'].forEach(key => {
+                data[key] = parseFloat(data[key]);
+            });
+            
+            await new Promise(resolve => setTimeout(resolve, 6000));
+            
+            try {
+                const response = await fetch('/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                loadingScreen.classList.remove('active');
+                
+                if (type === 'single') {
+                    showSingleResults(result, data);
+                }
+                
+                return { result, data };
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Simulation failed. Please try again.');
+                loadingScreen.classList.remove('active');
+                return null;
+            }
+        }
+
+        async function runComparison() {
+            const formA = document.getElementById('compareFormA');
+            const formB = document.getElementById('compareFormB');
+            
+            if (!formA.checkValidity() || !formB.checkValidity()) {
+                alert('Please fill in both hustle configurations');
+                return;
+            }
+            
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.add('active');
+            createLoadingParticles();
+            animateLoadingStats();
+            
+            document.getElementById('loadingText').textContent = 'Running Head-to-Head Analysis...';
+            document.getElementById('loadingSubtext').textContent = 'Comparing 200 scenarios across both hustles';
+            
+            const dataA = Object.fromEntries(new FormData(formA).entries());
+            const dataB = Object.fromEntries(new FormData(formB).entries());
+            
+            ['weekly_hours', 'skill_level', 'starting_capital', 'ad_budget_per_month', 'price', 'cost'].forEach(key => {
+                dataA[key] = parseFloat(dataA[key]);
+                dataB[key] = parseFloat(dataB[key]);
+            });
+            
+            await new Promise(resolve => setTimeout(resolve, 6000));
+            
+            try {
+                const [resA, resB] = await Promise.all([
+                    fetch('/simulate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(dataA)
+                    }),
+                    fetch('/simulate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(dataB)
+                    })
+                ]);
+                
+                const resultA = await resA.json();
+                const resultB = await resB.json();
+                
+                loadingScreen.classList.remove('active');
+                showCompareResults(resultA, dataA, resultB, dataB);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Comparison failed. Please try again.');
+                loadingScreen.classList.remove('active');
+            }
+        }
+
+        function showSingleResults(result, inputs) {
+            document.getElementById('singleResults').classList.add('active');
+            
+            const totalProfit = result.total_profit;
+            const finalCapital = result.final_capital;
+            const roi = ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100);
+            const breakEvenMonth = result.monthly_results.findIndex(m => m.net_profit > 0) + 1;
+            
+            const analysis = generateAnalysis(result, inputs);
+            const analysisCard = document.getElementById('analysisCard');
+            analysisCard.className = 'analysis-card ' + analysis.status;
+            document.getElementById('analysisIcon').textContent = analysis.status === 'success' ? '++' : analysis.status === 'warning' ? '~' : '--';
+            document.getElementById('analysisTitle').textContent = analysis.title;
+            document.getElementById('analysisText').textContent = analysis.text;
+            
+            const factorsHTML = analysis.factors.map(f => `
+                <div class="analysis-factor">
+                    <div class="analysis-factor-label">${f.label}</div>
+                    <div class="analysis-factor-value ${f.status}">${f.value}</div>
+                </div>
+            `).join('');
+            document.getElementById('analysisFactors').innerHTML = factorsHTML;
+            
+            const summaryHTML = `
+                <div class="summary-card ${totalProfit >= 0 ? 'positive' : 'negative'}">
+                    <div class="summary-label">Total Profit</div>
+                    <div class="summary-value ${totalProfit >= 0 ? 'positive' : 'negative'}">
+                        ${totalProfit >= 0 ? '+' : ''}$${totalProfit.toLocaleString()}
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Final Capital</div>
+                    <div class="summary-value">$${finalCapital.toLocaleString()}</div>
+                </div>
+                <div class="summary-card ${roi >= 0 ? 'positive' : 'negative'}">
+                    <div class="summary-label">6-Month ROI</div>
+                    <div class="summary-value ${roi >= 0 ? 'positive' : 'negative'}">
+                        ${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%
+                    </div>
+                </div>
+                <div class="summary-card ${breakEvenMonth > 0 ? 'positive' : 'negative'}">
+                    <div class="summary-label">Break Even</div>
+                    <div class="summary-value">${breakEvenMonth > 0 ? `Month ${breakEvenMonth}` : 'Never'}</div>
+                </div>
+            `;
+            document.getElementById('summaryCards').innerHTML = summaryHTML;
+            
+            const tableHTML = result.monthly_results.map(m => `
+                <tr>
+                    <td class="month-cell">Month ${m.month}</td>
+                    <td>${m.traffic.toLocaleString()}</td>
+                    <td>${m.customers}</td>
+                    <td>$${m.revenue.toLocaleString()}</td>
+                    <td>$${m.expenses.toLocaleString()}</td>
+                    <td class="${m.net_profit >= 0 ? 'profit-positive' : 'profit-negative'}">
+                        ${m.net_profit >= 0 ? '+' : ''}$${m.net_profit.toLocaleString()}
+                    </td>
+                </tr>
+            `).join('');
+            document.getElementById('monthlyTableBody').innerHTML = tableHTML;
+            
+            window.simulationResult = { result, inputs, roi, breakEvenMonth, analysis };
+            
+            document.getElementById('singleResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showCompareResults(resultA, inputsA, resultB, inputsB) {
+            document.getElementById('compareResults').classList.add('active');
+            
+            const profitA = resultA.total_profit;
+            const profitB = resultB.total_profit;
+            const roiA = ((resultA.final_capital - inputsA.starting_capital) / inputsA.starting_capital * 100);
+            const roiB = ((resultB.final_capital - inputsB.starting_capital) / inputsB.starting_capital * 100);
+            
+            const winner = profitA > profitB ? 'A' : 'B';
+            const winnerName = winner === 'A' ? inputsA.hustle.replace(/_/g, ' ') : inputsB.hustle.replace(/_/g, ' ');
+            const loserName = winner === 'A' ? inputsB.hustle.replace(/_/g, ' ') : inputsA.hustle.replace(/_/g, ' ');
+            const profitDiff = Math.abs(profitA - profitB);
+            const multiplier = Math.max(profitA, profitB) / Math.min(Math.abs(profitA), Math.abs(profitB) + 1);
+            
+            document.getElementById('winnerTitle').textContent = `${winnerName.toUpperCase()} WINS`;
+            document.getElementById('winnerSubtitle').textContent = `${multiplier.toFixed(1)}x more profitable than ${loserName} | +$${profitDiff.toLocaleString()} advantage`;
+            
+            const breakEvenA = resultA.monthly_results.findIndex(m => m.net_profit > 0) + 1;
+            const breakEvenB = resultB.monthly_results.findIndex(m => m.net_profit > 0) + 1;
+            
+            const dashboardHTML = `
+                <div class="compare-result-side ${winner === 'A' ? 'winner' : 'loser'}">
+                    <h4>${inputsA.hustle.replace(/_/g, ' ').toUpperCase()}</h4>
+                    <div class="compare-metrics">
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">6-Month Profit</div>
+                            <div class="compare-metric-value ${profitA >= 0 ? 'positive' : 'negative'}">
+                                ${profitA >= 0 ? '+' : ''}$${profitA.toLocaleString()}
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">ROI</div>
+                            <div class="compare-metric-value ${roiA >= 0 ? 'positive' : 'negative'}">
+                                ${roiA >= 0 ? '+' : ''}${roiA.toFixed(1)}%
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">Break Even</div>
+                            <div class="compare-metric-value">
+                                ${breakEvenA > 0 ? `Month ${breakEvenA}` : 'Never'}
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">Final Capital</div>
+                            <div class="compare-metric-value">$${resultA.final_capital.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="${winner === 'A' ? 'why-won' : 'why-lost'}">
+                        <h5>${winner === 'A' ? 'Why It Won' : 'Why It Lost'}</h5>
+                        <p>${generateCompareReason(resultA, inputsA, resultB, inputsB, winner === 'A')}</p>
+                    </div>
+                </div>
+
+                <div class="compare-result-side ${winner === 'B' ? 'winner' : 'loser'}">
+                    <h4>${inputsB.hustle.replace(/_/g, ' ').toUpperCase()}</h4>
+                    <div class="compare-metrics">
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">6-Month Profit</div>
+                            <div class="compare-metric-value ${profitB >= 0 ? 'positive' : 'negative'}">
+                                ${profitB >= 0 ? '+' : ''}$${profitB.toLocaleString()}
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">ROI</div>
+                            <div class="compare-metric-value ${roiB >= 0 ? 'positive' : 'negative'}">
+                                ${roiB >= 0 ? '+' : ''}${roiB.toFixed(1)}%
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">Break Even</div>
+                            <div class="compare-metric-value">
+                                ${breakEvenB > 0 ? `Month ${breakEvenB}` : 'Never'}
+                            </div>
+                        </div>
+                        <div class="compare-metric">
+                            <div class="compare-metric-label">Final Capital</div>
+                            <div class="compare-metric-value">$${resultB.final_capital.toLocaleString()}</div>
+                        </div>
+                    </div>
+                    <div class="${winner === 'B' ? 'why-won' : 'why-lost'}">
+                        <h5>${winner === 'B' ? 'Why It Won' : 'Why It Lost'}</h5>
+                        <p>${generateCompareReason(resultB, inputsB, resultA, inputsA, winner === 'B')}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('compareDashboard').innerHTML = dashboardHTML;
+            
+            window.compareResult = { resultA, inputsA, resultB, inputsB, winner, profitDiff, multiplier };
+            
+            document.getElementById('compareResults').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generateCompareReason(result, inputs, otherResult, otherInputs, isWinner) {
+            const reasons = [];
+            const profit = result.total_profit;
+            const otherProfit = otherResult.total_profit;
+            
+            if (isWinner) {
+                if (inputs.price > otherInputs.price * 1.5) {
+                    reasons.push('higher price point commanded premium value');
+                }
+                if (inputs.ad_budget_per_month > otherInputs.ad_budget_per_month) {
+                    reasons.push('superior ad spend enabled faster customer acquisition');
+                }
+                if (inputs.skill_level > otherInputs.skill_level) {
+                    reasons.push('higher skill level improved conversion rates');
+                }
+                if (inputs.weekly_hours > otherInputs.weekly_hours) {
+                    reasons.push('more time investment compounded results');
+                }
+                if (inputs.starting_capital > otherInputs.starting_capital) {
+                    reasons.push('greater starting capital provided runway advantage');
+                }
+                if (profit > 0 && otherProfit < 0) {
+                    reasons.push('positive unit economics while competitor struggled with costs');
+                }
+            } else {
+                if (inputs.price < otherInputs.price * 0.7) {
+                    reasons.push('lower price point compressed margins');
+                }
+                if (inputs.ad_budget_per_month < otherInputs.ad_budget_per_month * 0.5) {
+                    reasons.push('insufficient ad budget limited reach');
+                }
+                if (inputs.skill_level < otherInputs.skill_level) {
+                    reasons.push('skill gap reduced conversion efficiency');
+                }
+                if (inputs.starting_capital < otherInputs.starting_capital * 0.5) {
+                    reasons.push('capital constraints restricted growth');
+                }
+                if (profit < 0 && otherProfit > 0) {
+                    reasons.push('cost structure unsustainable vs competitor');
+                }
+            }
+            
+            if (reasons.length === 0) {
+                reasons.push(isWinner ? 'better market timing and execution' : 'market conditions favored alternative model');
+            }
+            
+            return `Key factors: ${reasons.slice(0, 3).join(', ')}. ${isWinner ? 'This configuration' : 'Despite effort'}, the ${isWinner ? 'profitability' : 'challenges'} reflect fundamental differences in unit economics and market fit.`;
+        }
+
+        function generateAnalysis(result, inputs) {
+            const totalProfit = result.total_profit;
+            const finalCapital = result.final_capital;
+            const roi = ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100);
+            const breakEvenMonth = result.monthly_results.findIndex(m => m.net_profit > 0) + 1;
+            const avgMonthlyProfit = totalProfit / 6;
+            
+            let status, title, text, factors;
+            
+            if (totalProfit > 5000 && roi > 100) {
+                status = 'success';
+                title = 'Strong Viability';
+                text = `Your ${inputs.hustle.replace(/_/g, ' ')} shows excellent potential. With ${inputs.weekly_hours} hours/week and $${inputs.starting_capital} starting capital, you're positioned to generate substantial returns. The model suggests consistent growth with break-even by month ${breakEvenMonth || 2}. Key success factors: adequate ad spend relative to price point, sustainable time commitment, and market timing.`;
+            } else if (totalProfit > 0 && breakEvenMonth <= 4) {
+                status = 'success';
+                title = 'Viable with Optimization';
+                text = `This hustle is viable but requires attention to specific variables. You'll break even by month ${breakEvenMonth}, which is healthy. To maximize returns, consider increasing ad budget once unit economics prove positive, or optimize your pricing strategy. The 6-month ROI of ${roi.toFixed(1)}% exceeds most traditional investments.`;
+            } else if (totalProfit > 0 && breakEvenMonth > 4) {
+                status = 'warning';
+                title = 'Slow Ramp - High Risk';
+                text = `While ultimately profitable, the 6-month timeline shows delayed returns. Breaking even at month ${breakEvenMonth} requires significant capital reserves and patience. Consider: reducing initial costs, increasing price point, or improving conversion through skill development. This hustle rewards persistence but punishes impatience.`;
+            } else if (totalProfit > -1000) {
+                status = 'warning';
+                title = 'Marginal - Needs Adjustment';
+                text = `Near break-even suggests you're close but missing key variables. Common issues: insufficient ad budget for the price point, pricing too low for market positioning, or time commitment too low for traction. Small adjustments (10-20% price increase, 5 more hours/week) often flip these to positive.`;
+            } else {
+                status = 'danger';
+                title = 'High Risk - Major Issues';
+                text = `This configuration shows significant challenges. The combination of $${inputs.starting_capital} capital, $${inputs.ad_budget_per_month}/month ad spend, and $${inputs.price} price point creates unsustainable unit economics. Primary concerns: `;
+                
+                const issues = [];
+                if (inputs.ad_budget_per_month < inputs.price * 10) issues.push('ad budget too low for customer acquisition');
+                if (inputs.starting_capital < 1000 && inputs.hustle !== 'content_creator') issues.push('insufficient runway capital');
+                if (inputs.weekly_hours < 10) issues.push('time commitment too low for traction');
+                if (inputs.price < inputs.cost * 2) issues.push('insufficient margin (need 2x+ cost)');
+                
+                text += issues.join(', ') + '. Consider pivoting hustle type or significantly adjusting inputs.';
+            }
+            
+            factors = [
+                { 
+                    label: 'Capital Efficiency', 
+                    value: (finalCapital / inputs.starting_capital).toFixed(2) + 'x',
+                    status: finalCapital > inputs.starting_capital * 1.5 ? 'positive' : finalCapital > inputs.starting_capital ? 'positive' : 'negative'
+                },
+                { 
+                    label: 'Monthly Velocity', 
+                    value: '$' + Math.abs(avgMonthlyProfit).toFixed(0),
+                    status: avgMonthlyProfit > 500 ? 'positive' : avgMonthlyProfit > 0 ? 'warning' : 'negative'
+                },
+                { 
+                    label: 'Risk Level', 
+                    value: breakEvenMonth > 0 && breakEvenMonth <= 3 ? 'Low' : breakEvenMonth <= 5 ? 'Medium' : 'High',
+                    status: breakEvenMonth > 0 && breakEvenMonth <= 3 ? 'positive' : breakEvenMonth <= 5 ? 'warning' : 'negative'
+                }
+            ];
+            
+            return { status, title, text, factors };
+        }
+
+        function createLoadingParticles() {
+            const container = document.getElementById('loadingParticles');
+            container.innerHTML = '';
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'loading-particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.animationDelay = Math.random() * 3 + 's';
+                p.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(p);
+            }
+        }
+
+        function animateLoadingStats() {
+            let scenarios = 0;
+            let months = 0;
+            const scenarioInterval = setInterval(() => {
+                scenarios += 5;
+                document.getElementById('statScenarios').textContent = scenarios;
+                if (scenarios >= 100) clearInterval(scenarioInterval);
+            }, 50);
+            
+            const monthInterval = setInterval(() => {
+                months++;
+                document.getElementById('statMonths').textContent = months;
+                if (months >= 6) clearInterval(monthInterval);
+            }, 800);
+        }
+
+        function newSimulation() {
+            document.getElementById('singleResults').classList.remove('active');
+            document.getElementById('singleForm').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('singleForm').reset();
+            document.getElementById('singleDynamicFields').innerHTML = '';
+        }
+
+        function newComparison() {
+            document.getElementById('compareResults').classList.remove('active');
+            document.getElementById('compareContainer').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('compareFormA').reset();
+            document.getElementById('compareFormB').reset();
+            document.getElementById('dynamicFieldsA').innerHTML = '';
+            document.getElementById('dynamicFieldsB').innerHTML = '';
+        }
+
+        function openShare() {
+            const { result, inputs, roi, breakEvenMonth, analysis } = window.simulationResult;
+            
+            const shareText = `My SimuHustle 6-Month Projection
+
+Hustle: ${inputs.hustle.replace(/_/g, ' ').toUpperCase()}
+Starting Capital: $${inputs.starting_capital.toLocaleString()}
+Weekly Hours: ${inputs.weekly_hours}
+
+RESULTS:
+Total Profit: ${result.total_profit >= 0 ? '+' : ''}$${result.total_profit.toLocaleString()}
+Final Capital: $${result.final_capital.toLocaleString()}
+6-Month ROI: ${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%
+Break Even: ${breakEvenMonth > 0 ? `Month ${breakEvenMonth}` : 'Never'}
+
+Verdict: ${analysis.title}
+
+Month-by-Month:
+${result.monthly_results.map(m => 
+    `M${m.month}: ${m.customers} customers | $${m.net_profit.toLocaleString()} profit`
+).join('\n')}
+
+Simulate your hustle at SimuHustle.com`;
+            
+            document.getElementById('sharePreview').innerHTML = `
+                <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">${shareText}</pre>
+                <span class="watermark">SIMUHUSTLE.COM</span>
+            `;
+            
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function openShareCompare() {
+            const { resultA, inputsA, resultB, inputsB, winner, profitDiff, multiplier } = window.compareResult;
+            
+            const winnerName = winner === 'A' ? inputsA.hustle.replace(/_/g, ' ') : inputsB.hustle.replace(/_/g, ' ');
+            const loserName = winner === 'A' ? inputsB.hustle.replace(/_/g, ' ') : inputsA.hustle.replace(/_/g, ' ');
+            
+            const shareText = `My SimuHustle Head-to-Head Comparison
+
+${inputsA.hustle.replace(/_/g, ' ').toUpperCase()} vs ${inputsB.hustle.replace(/_/g, ' ').toUpperCase()}
+
+WINNER: ${winnerName.toUpperCase()}
+Advantage: ${multiplier.toFixed(1)}x more profitable
+Profit Difference: +$${profitDiff.toLocaleString()}
+
+${inputsA.hustle.replace(/_/g, ' ').toUpperCase()}:
+Profit: ${resultA.total_profit >= 0 ? '+' : ''}$${resultA.total_profit.toLocaleString()}
+ROI: ${((resultA.final_capital - inputsA.starting_capital) / inputsA.starting_capital * 100).toFixed(1)}%
+
+${inputsB.hustle.replace(/_/g, ' ').toUpperCase()}:
+Profit: ${resultB.total_profit >= 0 ? '+' : ''}$${resultB.total_profit.toLocaleString()}
+ROI: ${((resultB.final_capital - inputsB.starting_capital) / inputsB.starting_capital * 100).toFixed(1)}%
+
+Compare your hustles at SimuHustle.com`;
+            
+            document.getElementById('sharePreview').innerHTML = `
+                <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">${shareText}</pre>
+                <span class="watermark">SIMUHUSTLE.COM</span>
+            `;
+            
+            document.getElementById('shareModal').classList.add('active');
+        }
+
+        function closeShare() {
+            document.getElementById('shareModal').classList.remove('active');
+        }
+
+        function copyResults() {
+            const text = document.getElementById('sharePreview').querySelector('pre').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const toast = document.getElementById('copiedToast');
+                toast.classList.add('active');
+                setTimeout(() => toast.classList.remove('active'), 2000);
+            });
+        }
+
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) closeShare();
+        });
+    </script>
+</body>
+</html>
