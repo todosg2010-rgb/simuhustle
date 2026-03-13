@@ -41,7 +41,196 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Full bleed sections */
+        /* Animated Background */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .bg-mesh {
+            position: absolute;
+            inset: -50%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.3) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(249, 115, 22, 0.3) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.2) 0px, transparent 50%);
+            filter: blur(80px);
+            animation: meshMove 20s ease-in-out infinite;
+        }
+
+        @keyframes meshMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(5%, -5%) rotate(5deg) scale(1.1); }
+            50% { transform: translate(-5%, 5%) rotate(-5deg) scale(0.95); }
+            75% { transform: translate(5%, 5%) rotate(3deg) scale(1.05); }
+        }
+
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Particle System */
+        .particle-field {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -5;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Generate 30 particles with inline styles for variety */
+        .particle:nth-child(1) { width: 4px; height: 4px; background: var(--primary); left: 5%; top: 100%; animation: float1 18s infinite; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(2) { width: 6px; height: 6px; background: var(--secondary); left: 15%; top: 100%; animation: float2 22s infinite 2s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(3) { width: 3px; height: 3px; background: var(--accent); left: 25%; top: 100%; animation: float3 20s infinite 4s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(4) { width: 5px; height: 5px; background: var(--primary); left: 35%; top: 100%; animation: float1 19s infinite 6s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(5) { width: 4px; height: 4px; background: var(--secondary); left: 45%; top: 100%; animation: float2 21s infinite 8s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(6) { width: 6px; height: 6px; background: var(--accent); left: 55%; top: 100%; animation: float3 17s infinite 10s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(7) { width: 3px; height: 3px; background: var(--primary); left: 65%; top: 100%; animation: float1 23s infinite 12s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(8) { width: 5px; height: 5px; background: var(--secondary); left: 75%; top: 100%; animation: float2 16s infinite 14s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(9) { width: 4px; height: 4px; background: var(--accent); left: 85%; top: 100%; animation: float3 24s infinite 16s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(10) { width: 6px; height: 6px; background: var(--primary); left: 95%; top: 100%; animation: float1 15s infinite 18s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(11) { width: 3px; height: 3px; background: var(--secondary); left: 10%; top: 100%; animation: float2 25s infinite 1s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(12) { width: 5px; height: 5px; background: var(--accent); left: 20%; top: 100%; animation: float3 14s infinite 3s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(13) { width: 4px; height: 4px; background: var(--primary); left: 30%; top: 100%; animation: float1 26s infinite 5s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(14) { width: 6px; height: 6px; background: var(--secondary); left: 40%; top: 100%; animation: float2 13s infinite 7s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(15) { width: 3px; height: 3px; background: var(--accent); left: 50%; top: 100%; animation: float3 27s infinite 9s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(16) { width: 5px; height: 5px; background: var(--primary); left: 60%; top: 100%; animation: float1 12s infinite 11s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(17) { width: 4px; height: 4px; background: var(--secondary); left: 70%; top: 100%; animation: float2 28s infinite 13s; box-shadow: 0 0 10px var(--secondary); }
+        .particle:nth-child(18) { width: 6px; height: 6px; background: var(--accent); left: 80%; top: 100%; animation: float3 11s infinite 15s; box-shadow: 0 0 10px var(--accent); }
+        .particle:nth-child(19) { width: 3px; height: 3px; background: var(--primary); left: 90%; top: 100%; animation: float1 29s infinite 17s; box-shadow: 0 0 10px var(--primary); }
+        .particle:nth-child(20) { width: 5px; height: 5px; background: var(--secondary); left: 3%; top: 100%; animation: float2 10s infinite 19s; box-shadow: 0 0 10px var(--secondary); }
+
+        @keyframes float1 {
+            0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+            5% { opacity: 1; transform: scale(1); }
+            95% { opacity: 1; }
+            100% { transform: translateY(-120vh) translateX(50px) scale(0.5); opacity: 0; }
+        }
+
+        @keyframes float2 {
+            0% { transform: translateY(0) translateX(0) scale(0) rotate(0deg); opacity: 0; }
+            5% { opacity: 1; transform: scale(1); }
+            95% { opacity: 1; }
+            100% { transform: translateY(-120vh) translateX(-80px) rotate(720deg) scale(0.3); opacity: 0; }
+        }
+
+        @keyframes float3 {
+            0% { transform: translateY(0) translateX(0) scale(0); opacity: 0; }
+            5% { opacity: 1; transform: scale(1); }
+            95% { opacity: 1; }
+            100% { transform: translateY(-120vh) translateX(30px) scale(0.4); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 100px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            animation: navFloat 4s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 60px rgba(139, 92, 246, 0.1);
+        }
+
+        @keyframes navFloat {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 30%, var(--secondary) 60%, var(--accent) 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            animation: logoShift 8s ease-in-out infinite;
+        }
+
+        @keyframes logoShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent), #ea580c);
+            background-size: 200% 200%;
+            color: white;
+            padding: 0.7rem 1.4rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4), 0 0 30px rgba(249, 115, 22, 0.2);
+            animation: ctaPulse 2s infinite, ctaGradient 4s ease-in-out infinite;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .nav-cta:hover::before {
+            transform: translateX(100%);
+        }
+
+        @keyframes ctaPulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4), 0 0 30px rgba(249, 115, 22, 0.2); transform: scale(1); }
+            50% { box-shadow: 0 8px 35px rgba(249, 115, 22, 0.6), 0 0 50px rgba(249, 115, 22, 0.4); transform: scale(1.05); }
+        }
+
+        @keyframes ctaGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Sections */
         section {
             width: 100vw;
             min-height: 100vh;
@@ -52,186 +241,85 @@
             overflow: hidden;
         }
 
-        /* Animated mesh gradient background */
-        .mesh-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -3;
-            background: 
-                radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(6, 182, 212, 0.3) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(249, 115, 22, 0.3) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.2) 0px, transparent 50%);
-            filter: blur(60px);
-            animation: meshMove 20s ease-in-out infinite;
-        }
-
-        @keyframes meshMove {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(30px, -30px) scale(1.1); }
-            50% { transform: translate(-20px, 20px) scale(0.95); }
-            75% { transform: translate(20px, 30px) scale(1.05); }
-        }
-
-        /* Floating particles */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: var(--primary);
-            border-radius: 50%;
-            opacity: 0.4;
-            animation: float 20s infinite;
-            box-shadow: 0 0 10px var(--primary);
-        }
-
-        .particle:nth-child(1) { left: 10%; top: 100%; animation-delay: 0s; animation-duration: 15s; }
-        .particle:nth-child(2) { left: 30%; top: 100%; animation-delay: 3s; animation-duration: 18s; background: var(--secondary); box-shadow: 0 0 10px var(--secondary); }
-        .particle:nth-child(3) { left: 50%; top: 100%; animation-delay: 6s; animation-duration: 20s; }
-        .particle:nth-child(4) { left: 70%; top: 100%; animation-delay: 9s; animation-duration: 16s; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-        .particle:nth-child(5) { left: 90%; top: 100%; animation-delay: 12s; animation-duration: 22s; background: var(--secondary); }
-
-        @keyframes float {
-            0% { transform: translateY(0) scale(0); opacity: 0; }
-            10% { opacity: 0.4; }
-            90% { opacity: 0.4; }
-            100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
-        }
-
-        /* Noise texture overlay */
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        /* Navigation - floating pill */
-        nav {
-            position: fixed;
-            top: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            background: rgba(10, 10, 18, 0.8);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 100px;
-            padding: 0.75rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: navFloat 3s ease-in-out infinite;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-        }
-
-        @keyframes navFloat {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-5px); }
-        }
-
-        .logo {
-            font-size: 1.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        .nav-cta {
-            background: linear-gradient(135deg, var(--accent), #ea580c);
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border-radius: 100px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-decoration: none;
-            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4);
-            animation: pulse 2s infinite;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(249, 115, 22, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 8px 30px rgba(249, 115, 22, 0.6); transform: scale(1.05); }
-        }
-
-        /* Hero Section */
+        /* Hero */
         .hero {
-            padding: 6rem 1.5rem 3rem;
+            padding: 8rem 1.5rem 4rem;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .badge {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(139, 92, 246, 0.15);
+            gap: 0.6rem;
+            background: rgba(139, 92, 246, 0.1);
             border: 1px solid rgba(139, 92, 246, 0.3);
-            padding: 0.6rem 1.2rem;
+            padding: 0.8rem 1.5rem;
             border-radius: 100px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--primary);
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            animation: badgeGlow 3s ease-in-out infinite;
+            letter-spacing: 0.15em;
+            animation: badgeGlow 3s ease-in-out infinite, badgeFloat 4s ease-in-out infinite;
+            backdrop-filter: blur(10px);
         }
 
         .badge svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             stroke: var(--primary);
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
         }
 
         @keyframes badgeGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.2); }
-            50% { box-shadow: 0 0 40px rgba(139, 92, 246, 0.4); }
+            0%, 100% { box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2); border-color: rgba(139, 92, 246, 0.6); }
+        }
+
+        @keyframes badgeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(3rem, 10vw, 5rem);
             font-weight: 800;
-            line-height: 1;
-            letter-spacing: -0.03em;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
             max-width: 90vw;
         }
 
+        .hero-line {
+            display: block;
+            opacity: 0;
+            transform: translateY(50px) rotateX(-30deg);
+            animation: lineReveal 1s ease-out forwards;
+        }
+
+        .hero-line:nth-child(1) { animation-delay: 0.2s; }
+        .hero-line:nth-child(2) { animation-delay: 0.4s; }
+        .hero-line:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes lineReveal {
+            to { opacity: 1; transform: translateY(0) rotateX(0); }
+        }
+
         .gradient-text {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--accent) 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 25%, var(--accent) 50%, var(--secondary) 75%, var(--primary) 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: block;
-            animation: gradientShift 5s ease-in-out infinite;
-            background-size: 200% 200%;
+            animation: gradientShift 8s ease-in-out infinite, textGlow 4s ease-in-out infinite;
         }
 
         @keyframes gradientShift {
@@ -239,31 +327,54 @@
             50% { background-position: 100% 50%; }
         }
 
-        .hero-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            max-width: 90vw;
-            line-height: 1.6;
-            margin-top: 1rem;
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(139, 92, 246, 0.3)); }
+            50% { filter: drop-shadow(0 0 50px rgba(6, 182, 212, 0.5)); }
         }
 
-        /* Stats pills */
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.8;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats */
         .stats-row {
             display: flex;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 1.5rem;
+            margin: 2.5rem 0;
             flex-wrap: wrap;
             justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1s forwards;
         }
 
         .stat-pill {
-            background: rgba(139, 92, 246, 0.1);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
             border: 1px solid rgba(139, 92, 246, 0.2);
-            padding: 1rem 1.5rem;
-            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            border-radius: 24px;
             text-align: center;
-            min-width: 100px;
-            animation: pillFloat 4s ease-in-out infinite;
+            min-width: 120px;
+            animation: pillFloat 5s ease-in-out infinite;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .stat-pill:hover {
+            transform: translateY(-10px) scale(1.05);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 30px 60px rgba(139, 92, 246, 0.2);
         }
 
         .stat-pill:nth-child(2) { animation-delay: 0.5s; }
@@ -271,49 +382,62 @@
 
         @keyframes pillFloat {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-8px); }
         }
 
         .stat-number {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: 800;
             color: var(--text);
             display: block;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .stat-label {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
+            margin-top: 0.5rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.1em;
         }
 
-        /* Main CTA Button */
+        /* CTA Main */
         .cta-main {
-            background: linear-gradient(135deg, var(--accent), #ea580c);
+            background: linear-gradient(135deg, var(--accent), #ea580c, #f59e0b);
+            background-size: 200% 200%;
             color: white;
-            padding: 1.2rem 2.5rem;
+            padding: 1.4rem 3rem;
             border-radius: 100px;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             text-decoration: none;
             border: none;
             cursor: pointer;
-            box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4);
-            animation: ctaPulse 2s infinite;
+            box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2);
+            animation: ctaPulseHero 2.5s infinite, ctaGradientShift 4s ease-in-out infinite, ctaFloat 3s ease-in-out infinite;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             margin-top: 1rem;
             position: relative;
             overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.2s forwards, ctaPulseHero 2.5s infinite 1.2s, ctaGradientShift 4s ease-in-out infinite 1.2s, ctaFloat 3s ease-in-out infinite 1.2s;
         }
 
         .cta-main svg {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             stroke: white;
             stroke-width: 2.5;
+            animation: arrowBounce 1s infinite;
+        }
+
+        @keyframes arrowBounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
         }
 
         .cta-main::before {
@@ -323,231 +447,315 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             transition: left 0.6s;
         }
 
-        .cta-main:active {
-            transform: scale(0.95);
+        .cta-main:hover::before {
+            left: 100%;
         }
 
-        @keyframes ctaPulse {
-            0%, 100% { box-shadow: 0 10px 40px rgba(249, 115, 22, 0.4); transform: scale(1); }
-            50% { box-shadow: 0 15px 50px rgba(249, 115, 22, 0.6); transform: scale(1.02); }
+        @keyframes ctaPulseHero {
+            0%, 100% { box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2); transform: scale(1); }
+            50% { box-shadow: 0 20px 60px rgba(249, 115, 22, 0.6), 0 0 80px rgba(249, 115, 22, 0.4); transform: scale(1.03); }
         }
 
-        /* Floating cards visualization */
-        .floating-cards {
+        @keyframes ctaGradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes ctaFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        /* Orbital System */
+        .orbital-system {
             position: relative;
             width: 100%;
-            height: 300px;
-            margin-top: 2rem;
-            perspective: 1000px;
+            height: 400px;
+            margin-top: 3rem;
+            perspective: 1500px;
         }
 
-        .float-card {
+        .orbit-container {
             position: absolute;
-            background: rgba(21, 21, 32, 0.9);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 20px;
-            padding: 1rem 1.5rem;
-            font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-            animation: cardFloat 6s ease-in-out infinite;
-            backdrop-filter: blur(10px);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            height: 350px;
+            animation: orbitRotate 30s linear infinite;
         }
 
-        .float-card:nth-child(1) { 
-            top: 10%; 
-            left: 10%; 
-            color: var(--primary); 
-            border-color: var(--primary);
-            animation-delay: 0s;
-            transform: rotate(-5deg);
-        }
-        .float-card:nth-child(2) { 
-            top: 20%; 
-            right: 10%; 
-            color: var(--secondary); 
-            border-color: var(--secondary);
-            animation-delay: 1.5s;
-            transform: rotate(5deg);
-        }
-        .float-card:nth-child(3) { 
-            top: 50%; 
-            left: 5%; 
-            color: var(--accent); 
-            border-color: var(--accent);
-            animation-delay: 3s;
-            transform: rotate(-3deg);
-        }
-        .float-card:nth-child(4) { 
-            top: 60%; 
-            right: 5%; 
-            color: var(--primary); 
-            border-color: var(--primary);
-            animation-delay: 4.5s;
-            transform: rotate(3deg);
+        @keyframes orbitRotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        @keyframes cardFloat {
-            0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
-            50% { transform: translateY(-20px) rotate(var(--rotate, 0deg)); }
-        }
-
-        /* Marquee section */
-        .marquee-section {
-            min-height: auto;
-            padding: 3rem 0;
-            background: rgba(10, 10, 18, 0.5);
-            border-top: 1px solid rgba(139, 92, 246, 0.1);
-            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
-        .marquee-track {
-            display: inline-flex;
-            gap: 3rem;
-            animation: marquee 25s linear infinite;
-        }
-
-        .marquee-item {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .marquee-item svg {
-            width: 8px;
-            height: 8px;
-            fill: var(--primary);
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* How it works - vertical scroll cards */
-        .how-it-works {
-            padding: 4rem 1.5rem;
-            gap: 2rem;
-        }
-
-        .section-title {
-            font-size: clamp(2rem, 6vw, 3rem);
-            font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        .section-subtitle {
-            color: var(--text-muted);
-            text-align: center;
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .steps-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .step-card {
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 24px;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .step-card:active {
-            transform: scale(0.98);
-        }
-
-        .step-number {
+        .orbit-ring {
             position: absolute;
-            top: -10px;
-            right: -10px;
-            width: 60px;
-            height: 60px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .orbit-ring-1 { width: 200px; height: 200px; border-color: rgba(139, 92, 246, 0.3); animation: ringPulse1 4s ease-in-out infinite; }
+        .orbit-ring-2 { width: 280px; height: 280px; border-color: rgba(6, 182, 212, 0.2); animation: ringPulse2 5s ease-in-out infinite; }
+        .orbit-ring-3 { width: 350px; height: 350px; border-color: rgba(249, 115, 22, 0.15); animation: ringPulse3 6s ease-in-out infinite; }
+
+        @keyframes ringPulse1 { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.6; } }
+        @keyframes ringPulse2 { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.2; } 50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.4; } }
+        @keyframes ringPulse3 { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; } 50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.3; } }
+
+        .center-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 0 0 80px var(--glow), 0 0 120px var(--glow);
+            z-index: 10;
+            animation: coreBreathe 4s ease-in-out infinite;
+        }
+
+        @keyframes coreBreathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+        }
+
+        .hustle-node {
+            position: absolute;
+            background: var(--surface-2);
+            border: 2px solid;
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            white-space: nowrap;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px);
+        }
+
+        .hustle-node-1 { top: -30px; left: 50%; margin-left: -60px; border-color: var(--primary); color: var(--primary); animation: nodeFloat 4s ease-in-out infinite; }
+        .hustle-node-2 { top: 50%; right: -40px; margin-top: -20px; border-color: var(--secondary); color: var(--secondary); animation: nodeFloat 4s ease-in-out infinite 1s; }
+        .hustle-node-3 { bottom: -30px; left: 50%; margin-left: -50px; border-color: var(--accent); color: var(--accent); animation: nodeFloat 4s ease-in-out infinite 2s; }
+        .hustle-node-4 { top: 50%; left: -40px; margin-top: -20px; border-color: var(--primary); color: var(--primary); animation: nodeFloat 4s ease-in-out infinite 3s; }
+
+        @keyframes nodeFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            animation: scrollBounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+            50% { transform: translateX(-50%) translateY(15px); opacity: 1; }
+        }
+
+        .scroll-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .scroll-mouse {
+            width: 26px;
+            height: 40px;
+            border: 2px solid var(--text-muted);
+            border-radius: 13px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: wheelScroll 1.5s infinite;
+        }
+
+        @keyframes wheelScroll {
+            0% { top: 8px; opacity: 1; }
+            100% { top: 20px; opacity: 0; }
+        }
+
+        /* Marquee */
+        .marquee-section {
+            min-height: auto;
+            padding: 4rem 0;
+            background: rgba(10, 10, 18, 0.6);
+            border-top: 1px solid rgba(139, 92, 246, 0.1);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-container::before, .marquee-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 150px;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .marquee-container::before { left: 0; background: linear-gradient(to right, var(--surface), transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, var(--surface), transparent); }
+
+        .marquee-track {
+            display: inline-flex;
+            gap: 4rem;
+            animation: marquee 30s linear infinite;
+        }
+
+        .marquee-track:hover { animation-play-state: paused; }
+
+        .marquee-item {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .marquee-item:hover { color: var(--text); transform: scale(1.1); }
+
+        .marquee-item svg { width: 10px; height: 10px; fill: var(--primary); animation: dotPulse 2s infinite; }
+
+        @keyframes dotPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* How It Works */
+        .how-it-works { padding: 6rem 1.5rem; gap: 3rem; }
+
+        .section-header { text-align: center; margin-bottom: 3rem; }
+
+        .section-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle { color: var(--text-muted); font-size: 1.2rem; max-width: 500px; margin: 0 auto; }
+
+        .steps-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.05));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 32px;
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(20px);
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        .step-card.visible { opacity: 1; transform: translateX(0); }
+        .step-card:hover { transform: translateY(-10px); border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(139, 92, 246, 0.2); }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 2rem;
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
             animation: numberPulse 3s infinite;
         }
 
-        @keyframes numberPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
+        @keyframes numberPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        .step-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            margin-top: 0.5rem;
-        }
+        .step-card h3 { font-size: 1.6rem; margin-bottom: 1rem; margin-top: 0.5rem; background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .step-card p { color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; }
 
-        .step-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* Hustle showcase - horizontal scroll */
-        .hustle-showcase {
-            padding: 4rem 0;
-            gap: 2rem;
-        }
-
-        .showcase-header {
-            padding: 0 1.5rem;
-            text-align: center;
-        }
+        /* Hustle Showcase */
+        .hustle-showcase { padding: 6rem 0; gap: 3rem; }
+        .showcase-header { padding: 0 1.5rem; text-align: center; }
 
         .horizontal-scroll {
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
             overflow-x: auto;
-            padding: 1rem 1.5rem;
+            padding: 2rem 1.5rem;
             scroll-snap-type: x mandatory;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
         }
 
-        .horizontal-scroll::-webkit-scrollbar {
-            display: none;
-        }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
 
         .hustle-card {
             flex: 0 0 85vw;
-            max-width: 320px;
+            max-width: 340px;
             background: var(--surface-2);
             border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 24px;
-            padding: 2rem;
+            border-radius: 32px;
+            padding: 2.5rem;
             scroll-snap-align: center;
             position: relative;
             overflow: hidden;
+            transition: all 0.5s ease;
+            backdrop-filter: blur(20px);
         }
 
         .hustle-card::before {
@@ -556,158 +764,115 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 100%;
             animation: lineMove 3s linear infinite;
-            background-size: 200% 100%;
         }
 
-        @keyframes lineMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
-        }
+        @keyframes lineMove { 0% { background-position: 0% 50%; } 100% { background-position: 300% 50%; } }
+
+        .hustle-card:hover { transform: translateY(-15px); border-color: rgba(139, 92, 246, 0.5); box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(139, 92, 246, 0.2); }
 
         .hustle-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(139, 92, 246, 0.1);
-            border-radius: 16px;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.1));
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1);
+            animation: iconFloat 4s ease-in-out infinite;
         }
 
-        .hustle-icon svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--primary);
-            stroke-width: 2;
-        }
+        @keyframes iconFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
+        .hustle-icon svg { width: 32px; height: 32px; stroke: var(--primary); stroke-width: 2; }
         .hustle-card:nth-child(2) .hustle-icon svg { stroke: var(--secondary); }
         .hustle-card:nth-child(3) .hustle-icon svg { stroke: var(--accent); }
         .hustle-card:nth-child(4) .hustle-icon svg { stroke: var(--secondary); }
         .hustle-card:nth-child(5) .hustle-icon svg { stroke: var(--primary); }
 
-        .hustle-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .hustle-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
+        .hustle-card h3 { font-size: 1.6rem; margin-bottom: 0.8rem; background: linear-gradient(135deg, var(--text) 0%, var(--text-muted) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hustle-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; }
 
         .hustle-tag {
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
+            gap: 0.4rem;
             background: rgba(139, 92, 246, 0.1);
             color: var(--primary);
-            padding: 0.3rem 0.8rem;
+            padding: 0.5rem 1rem;
             border-radius: 100px;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 600;
+            border: 1px solid rgba(139, 92, 246, 0.2);
         }
 
-        .hustle-tag svg {
-            width: 12px;
-            height: 12px;
-            stroke: var(--primary);
-        }
+        .hustle-tag svg { width: 14px; height: 14px; stroke: var(--primary); }
 
-        /* Social proof / FOMO ticker */
-        .fomo-section {
-            padding: 3rem 1.5rem;
-            background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent);
-        }
-
-        .fomo-ticker {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+        /* FOMO Section */
+        .fomo-section { padding: 4rem 1.5rem; background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.05), transparent); }
+        .fomo-ticker { display: flex; flex-direction: column; gap: 1rem; max-width: 600px; margin: 0 auto; }
 
         .fomo-item {
             background: rgba(21, 21, 32, 0.8);
             border: 1px solid rgba(139, 92, 246, 0.15);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            padding: 1.2rem 1.8rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            animation: slideIn 0.5s ease-out;
-            backdrop-filter: blur(10px);
+            gap: 1.2rem;
+            animation: slideIn 0.6s ease-out;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s ease;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(-100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
+        .fomo-item:hover { transform: translateX(10px); border-color: rgba(139, 92, 246, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
         .fomo-avatar {
-            width: 40px;
-            height: 40px;
+            width: 48px;
+            height: 48px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 1rem;
             flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
         }
 
-        .fomo-text {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            flex: 1;
-        }
-
-        .fomo-text strong {
-            color: var(--text);
-        }
-
-        .fomo-time {
-            font-size: 0.75rem;
-            color: var(--accent);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 0.3rem;
-        }
-
-        .fomo-time svg {
-            width: 12px;
-            height: 12px;
-            stroke: var(--accent);
-        }
+        .fomo-text { font-size: 1rem; color: var(--text-muted); flex: 1; line-height: 1.5; }
+        .fomo-text strong { color: var(--text); font-weight: 600; }
+        .fomo-time { font-size: 0.85rem; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; font-weight: 600; }
+        .fomo-time svg { width: 14px; height: 14px; stroke: var(--accent); }
 
         /* Final CTA */
-        .final-cta {
-            padding: 4rem 1.5rem;
-            text-align: center;
-            background: 
-                radial-gradient(ellipse at center, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
-        }
+        .final-cta { padding: 6rem 1.5rem; text-align: center; background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.2) 0%, transparent 60%); position: relative; }
+        .final-cta::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B5CF6' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; animation: bgPattern 20s linear infinite; }
+        @keyframes bgPattern { from { transform: translateY(0); } to { transform: translateY(-60px); } }
 
         .cta-card {
             background: rgba(21, 21, 32, 0.9);
             border: 1px solid rgba(139, 92, 246, 0.3);
-            border-radius: 32px;
-            padding: 3rem 2rem;
-            max-width: 500px;
+            border-radius: 40px;
+            padding: 4rem 3rem;
+            max-width: 600px;
             margin: 0 auto;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 100px rgba(139, 92, 246, 0.1);
+            animation: cardFloat 6s ease-in-out infinite;
         }
+
+        @keyframes cardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
         .cta-card::before {
             content: '';
@@ -716,97 +881,54 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, var(--primary), transparent 30%);
-            animation: rotate 4s linear infinite;
-            opacity: 0.3;
+            background: conic-gradient(from 0deg, transparent, var(--primary), var(--secondary), var(--accent), var(--primary), transparent);
+            animation: rotate 8s linear infinite;
+            opacity: 0.15;
         }
 
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
+        .cta-card::after { content: ''; position: absolute; inset: 2px; background: var(--surface-2); border-radius: 38px; z-index: 1; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
 
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-card h2 {
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .cta-card p {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
-        }
+        .cta-content { position: relative; z-index: 2; }
+        .cta-card h2 { font-size: clamp(2rem, 6vw, 3rem); font-weight: 800; margin-bottom: 1.5rem; line-height: 1.2; background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .cta-card p { color: var(--text-muted); margin-bottom: 2.5rem; font-size: 1.2rem; line-height: 1.7; }
 
         .cta-big {
-            background: linear-gradient(135deg, var(--accent), #ea580c);
+            background: linear-gradient(135deg, var(--accent), #ea580c, #f59e0b);
+            background-size: 200% 200%;
             color: white;
-            padding: 1.5rem 3rem;
+            padding: 1.8rem 4rem;
             border-radius: 100px;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-decoration: none;
             border: none;
             cursor: pointer;
-            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.5);
+            box-shadow: 0 25px 70px rgba(249, 115, 22, 0.5), 0 0 80px rgba(249, 115, 22, 0.3);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            animation: bigPulse 2s infinite;
+            gap: 0.8rem;
+            animation: bigPulse 2.5s infinite, bigGradient 4s ease-in-out infinite;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .cta-big svg {
-            width: 20px;
-            height: 20px;
-            stroke: white;
-            stroke-width: 2.5;
-        }
+        .cta-big svg { width: 24px; height: 24px; stroke: white; stroke-width: 2.5; animation: arrowFly 1.5s infinite; }
+        @keyframes arrowFly { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(8px); } }
 
-        @keyframes bigPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 20px 60px rgba(249, 115, 22, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 30px 80px rgba(249, 115, 22, 0.7); }
-        }
+        .cta-big::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent); transition: left 0.6s; }
+        .cta-big:hover::before { left: 100%; }
+        .cta-big:hover { transform: scale(1.05); box-shadow: 0 30px 80px rgba(249, 115, 22, 0.6), 0 0 100px rgba(249, 115, 22, 0.4); }
 
-        /* Scroll indicator */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
-            animation: bounce 2s infinite;
-            opacity: 0.7;
-        }
+        @keyframes bigPulse { 0%, 100% { transform: scale(1); box-shadow: 0 25px 70px rgba(249, 115, 22, 0.5), 0 0 80px rgba(249, 115, 22, 0.3); } 50% { transform: scale(1.03); box-shadow: 0 30px 80px rgba(249, 115, 22, 0.7), 0 0 100px rgba(249, 115, 22, 0.5); } }
+        @keyframes bigGradient { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
+        /* Disclaimer */
+        .disclaimer { padding: 3rem 1.5rem; background: rgba(10, 10, 18, 0.9); border-top: 1px solid rgba(139, 92, 246, 0.1); }
+        .disclaimer-text { max-width: 900px; margin: 0 auto; text-align: center; font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; opacity: 0.7; }
 
-        .scroll-text {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, var(--primary), transparent);
-        }
-
-        /* Streak/flame indicator */
+        /* Streak Indicator */
         .streak-indicator {
             position: fixed;
             bottom: 2rem;
@@ -814,129 +936,76 @@
             background: rgba(21, 21, 32, 0.9);
             border: 1px solid rgba(249, 115, 22, 0.3);
             border-radius: 100px;
-            padding: 0.75rem 1rem;
+            padding: 1rem 1.2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
             font-weight: 700;
-            font-size: 0.9rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 1rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 30px rgba(249, 115, 22, 0.2);
             z-index: 999;
-            animation: streakFloat 3s ease-in-out infinite;
-            backdrop-filter: blur(10px);
+            animation: streakFloat 4s ease-in-out infinite;
+            backdrop-filter: blur(20px);
         }
 
-        @keyframes streakFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
+        @keyframes streakFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 
-        .flame-svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--accent);
-            fill: rgba(249, 115, 22, 0.3);
-            animation: flame 1s infinite;
-        }
+        .flame-svg { width: 24px; height: 24px; stroke: var(--accent); fill: rgba(249, 115, 22, 0.3); animation: flameFlicker 0.8s infinite alternate; }
+        @keyframes flameFlicker { 0% { transform: scale(1) rotate(-5deg); } 100% { transform: scale(1.2) rotate(5deg); } }
 
-        @keyframes flame {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        /* Disclaimer section */
-        .disclaimer {
-            padding: 2rem 1.5rem;
-            background: rgba(10, 10, 18, 0.8);
-            border-top: 1px solid rgba(139, 92, 246, 0.1);
-        }
-
-        .disclaimer-text {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            opacity: 0.8;
-        }
-
-        /* Confetti animation */
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            position: absolute;
-            animation: confetti-fall 3s linear forwards;
-            z-index: 9999;
-            pointer-events: none;
-        }
-
-        @keyframes confetti-fall {
-            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* Responsive tweaks */
+        /* Responsive */
         @media (min-width: 768px) {
-            .hero h1 {
-                font-size: 5rem;
-            }
-            
-            .floating-cards {
-                height: 400px;
-            }
-            
-            .float-card {
-                font-size: 1.1rem;
-                padding: 1.2rem 2rem;
-            }
-            
-            .hustle-card {
-                flex: 0 0 300px;
-            }
+            .hero h1 { font-size: 5rem; }
+            .orbital-system { height: 500px; }
+            .orbit-container { width: 450px; height: 450px; }
+            .orbit-ring-1 { width: 250px; height: 250px; }
+            .orbit-ring-2 { width: 350px; height: 350px; }
+            .orbit-ring-3 { width: 450px; height: 450px; }
+            .hustle-card { flex: 0 0 340px; }
         }
 
-        /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
+            * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
         }
     </style>
 </head>
 <body>
-    <div class="mesh-bg"></div>
-    <div class="particles">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
+    <!-- Background System -->
+    <div class="bg-container">
+        <div class="bg-mesh"></div>
+        <div class="bg-grid"></div>
     </div>
-    <div class="noise"></div>
 
+    <!-- Particle Field -->
+    <div class="particle-field">
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    </div>
+
+    <!-- Navigation -->
     <nav>
         <a href="#" class="logo">SimuHustle</a>
-        <a href="#demo" class="nav-cta">
+        <a href="/demo" class="nav-cta">
             Try Demo
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <div class="badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
             Free Demo Available
         </div>
+        
         <h1>
-            Test 10+ Side Hustles
-            <span class="gradient-text">6-Month Reality</span>
-            Zero Risk
+            <span class="hero-line">Test 10+ Side Hustles</span>
+            <span class="hero-line gradient-text">6-Month Reality</span>
+            <span class="hero-line">Zero Risk</span>
         </h1>
+        
         <p class="hero-subtitle">Simulate real market conditions across 10+ proven side hustles. See exactly how your first 6 months would play out before you invest time or money.</p>
         
         <div class="stats-row">
@@ -954,122 +1023,68 @@
             </div>
         </div>
 
-        <a href="#demo" class="cta-main" onclick="triggerConfetti(event)">
+        <a href="/demo" class="cta-main" onclick="triggerConfetti(event)">
             Run Free Simulation
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
 
-        <div class="floating-cards">
-            <div class="float-card" style="--rotate: -5deg;">Dropship</div>
-            <div class="float-card" style="--rotate: 5deg;">Agency</div>
-            <div class="float-card" style="--rotate: -3deg;">Micro SaaS</div>
-            <div class="float-card" style="--rotate: 3deg;">Newsletter</div>
+        <!-- Orbital System -->
+        <div class="orbital-system">
+            <div class="orbit-container">
+                <div class="orbit-ring orbit-ring-1"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="orbit-ring orbit-ring-3"></div>
+                <div class="center-core">6 MO<br>PROJECTION</div>
+                <div class="hustle-node hustle-node-1">Dropship</div>
+                <div class="hustle-node hustle-node-2">Agency</div>
+                <div class="hustle-node hustle-node-3">Micro SaaS</div>
+                <div class="hustle-node hustle-node-4">Newsletter</div>
+            </div>
         </div>
 
         <div class="scroll-indicator">
             <span class="scroll-text">Scroll</span>
-            <div class="scroll-line"></div>
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
         </div>
     </section>
 
+    <!-- Marquee Section -->
     <section class="marquee-section">
         <div class="marquee-container">
             <div class="marquee-track">
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Dropshipping
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Print on Demand
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Amazon FBA
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Etsy Store
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Digital Products
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Online Course
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Newsletter
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Affiliate Marketing
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Micro SaaS
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Agency
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Content Creator
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Dropshipping
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Print on Demand
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Amazon FBA
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Etsy Store
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Digital Products
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Online Course
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Newsletter
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Affiliate Marketing
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Micro SaaS
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Agency
-                </div>
-                <div class="marquee-item">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>
-                    Content Creator
-                </div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Dropshipping</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Print on Demand</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Amazon FBA</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Etsy Store</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Digital Products</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Online Course</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Newsletter</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Affiliate Marketing</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Micro SaaS</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Agency</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Content Creator</div>
+                <!-- Duplicate for seamless loop -->
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Dropshipping</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Print on Demand</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Amazon FBA</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Etsy Store</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Digital Products</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Online Course</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Newsletter</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Affiliate Marketing</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Micro SaaS</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Agency</div>
+                <div class="marquee-item"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="12" r="10"/></svg>Content Creator</div>
             </div>
         </div>
     </section>
 
+    <!-- How It Works -->
     <section class="how-it-works">
-        <h2 class="section-title">How It Works</h2>
-        <p class="section-subtitle">Three steps to see your future without living it first</p>
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Three steps to see your future without living it first</p>
+        </div>
         
         <div class="steps-wrapper">
             <div class="step-card">
@@ -1090,6 +1105,7 @@
         </div>
     </section>
 
+    <!-- Hustle Showcase -->
     <section class="hustle-showcase">
         <div class="showcase-header">
             <h2 class="section-title">Popular Hustles</h2>
@@ -1099,71 +1115,72 @@
         <div class="horizontal-scroll">
             <div class="hustle-card">
                 <div class="hustle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
                 </div>
                 <h3>Dropshipping</h3>
                 <p>Low entry barrier, high competition. See if you can survive the ad costs.</p>
                 <span class="hustle-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     Beginner Friendly
                 </span>
             </div>
             <div class="hustle-card">
                 <div class="hustle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></svg>
                 </div>
                 <h3>Micro SaaS</h3>
                 <p>Build once, sell forever. But can you get your first 100 users?</p>
                 <span class="hustle-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                     High Potential
                 </span>
             </div>
             <div class="hustle-card">
                 <div class="hustle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                 </div>
                 <h3>Newsletter</h3>
                 <p>Content is king but consistency is queen. Simulate subscriber growth.</p>
                 <span class="hustle-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                     Low Cost
                 </span>
             </div>
             <div class="hustle-card">
                 <div class="hustle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"/></svg>
                 </div>
                 <h3>Print on Demand</h3>
                 <p>Design skills required. Test if your aesthetic sells in a crowded market.</p>
                 <span class="hustle-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.01 17.461 2 12 2z"/></svg>
                     Creative
                 </span>
             </div>
             <div class="hustle-card">
                 <div class="hustle-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5 5 0 0 1 7.07 0l3.89 3.89a1 1 0 1 0 3-3L14 5l-2.5 2.5"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5 5 0 0 1 7.07 0l3.89 3.89a1 1 0 1 0 3-3L14 5l-2.5 2.5"/></svg>
                 </div>
                 <h3>Agency</h3>
                 <p>High ticket, high touch. See if you can land clients month one.</p>
                 <span class="hustle-tag">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                     Fast Cash
                 </span>
             </div>
         </div>
     </section>
 
+    <!-- FOMO Section -->
     <section class="fomo-section">
-        <h2 class="section-title" style="font-size: 1.5rem; margin-bottom: 1.5rem;">Live Simulations</h2>
+        <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 2rem; text-align: center;">Live Simulations</h2>
         <div class="fomo-ticker" id="fomoTicker">
             <div class="fomo-item">
                 <div class="fomo-avatar">JD</div>
                 <div class="fomo-text"><strong>Just tested</strong> Dropshipping — Projected $2.4k/mo by month 4</div>
                 <div class="fomo-time">
                     2s ago
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
             </div>
             <div class="fomo-item">
@@ -1171,7 +1188,7 @@
                 <div class="fomo-text"><strong>Just tested</strong> Micro SaaS — Break-even month 3</div>
                 <div class="fomo-time">
                     5s ago
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
             </div>
             <div class="fomo-item">
@@ -1179,58 +1196,91 @@
                 <div class="fomo-text"><strong>Just tested</strong> Newsletter — 10k subs projected</div>
                 <div class="fomo-time">
                     12s ago
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="final-cta" id="demo">
+    <!-- Final CTA -->
+    <section class="final-cta">
         <div class="cta-card">
             <div class="cta-content">
                 <h2>Ready to Test Your Hustle?</h2>
                 <p>Free demo. No signup. See your 6-month projection in 60 seconds.</p>
-                <button class="cta-big" onclick="triggerConfetti(event)">
+                <a href="/demo" class="cta-big" onclick="triggerConfetti(event)">
                     Start Free Simulation
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                </button>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- Disclaimer -->
     <section class="disclaimer">
         <p class="disclaimer-text">Disclaimer: SimuHustle provides simulated business scenarios for educational and entertainment purposes only. Results are hypothetical and do not guarantee real-world outcomes. Users should conduct their own research before starting any business.</p>
     </section>
 
+    <!-- Streak Indicator -->
     <div class="streak-indicator">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flame-svg"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flame-svg"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
         <span>247 sims today</span>
     </div>
 
     <script>
-        // Confetti effect on CTA click
+        // Confetti effect with navigation
         function triggerConfetti(e) {
+            e.preventDefault();
             const colors = ['#8B5CF6', '#06B6D4', '#F97316', '#ffffff'];
-            const rect = e.target.getBoundingClientRect();
+            const rect = e.currentTarget.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
             
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 40; i++) {
                 const confetti = document.createElement('div');
-                confetti.className = 'confetti';
+                confetti.style.position = 'fixed';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.left = centerX + 'px';
                 confetti.style.top = centerY + 'px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.pointerEvents = 'none';
+                confetti.style.zIndex = '9999';
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                confetti.style.animationDelay = (Math.random() * 0.5) + 's';
+                
+                const angle = (Math.PI * 2 * i) / 40;
+                const velocity = 10 + Math.random() * 10;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
                 document.body.appendChild(confetti);
                 
-                setTimeout(() => confetti.remove(), 4000);
+                let x = centerX;
+                let y = centerY;
+                let opacity = 1;
+                
+                const animate = () => {
+                    x += vx;
+                    y += vy + 2;
+                    opacity -= 0.02;
+                    confetti.style.left = x + 'px';
+                    confetti.style.top = y + 'px';
+                    confetti.style.opacity = opacity;
+                    confetti.style.transform += ` rotate(10deg)`;
+                    
+                    if (opacity > 0) requestAnimationFrame(animate);
+                    else confetti.remove();
+                };
+                requestAnimationFrame(animate);
             }
+            
+            setTimeout(() => {
+                window.location.href = e.currentTarget.getAttribute('href');
+            }, 400);
         }
 
-        // FOMO ticker animation
+        // FOMO ticker
         const fomoItems = [
             { name: 'JD', action: 'Dropshipping', result: '$2.4k/mo by month 4' },
             { name: 'MK', action: 'Micro SaaS', result: 'Break-even month 3' },
@@ -1244,13 +1294,9 @@
         setInterval(() => {
             const ticker = document.getElementById('fomoTicker');
             const items = ticker.querySelectorAll('.fomo-item');
-            
-            // Remove first item with animation
             items[0].style.animation = 'slideIn 0.5s ease-out reverse forwards';
             setTimeout(() => {
                 items[0].remove();
-                
-                // Add new item
                 const data = fomoItems[fomoIndex % fomoItems.length];
                 const newItem = document.createElement('div');
                 newItem.className = 'fomo-item';
@@ -1259,7 +1305,7 @@
                     <div class="fomo-text"><strong>Just tested</strong> ${data.action} — ${data.result}</div>
                     <div class="fomo-time">
                         Just now
-                        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"12\" height=\"12\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\"/><polyline points=\"16 7 22 7 22 13\"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                     </div>
                 `;
                 ticker.appendChild(newItem);
@@ -1267,55 +1313,30 @@
             }, 400);
         }, 4000);
 
-        // Parallax effect on scroll
+        // Scroll reveal for step cards
+        const observerOptions = { threshold: 0.2, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-card').forEach(card => observer.observe(card));
+
+        // Parallax effect
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.pageYOffset;
-                    const parallax = document.querySelector('.mesh-bg');
-                    parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+                    document.querySelector('.bg-mesh').style.transform = `translateY(${scrolled * 0.3}px)`;
                     ticking = false;
                 });
                 ticking = true;
             }
         });
-
-        // Button ripple effect
-        document.querySelectorAll('.cta-main, .cta-big, .nav-cta').forEach(button => {
-            button.addEventListener('click', function(e) {
-                const ripple = document.createElement('span');
-                const rect = this.getBoundingClientRect();
-                const size = Math.max(rect.width, rect.height);
-                const x = e.clientX - rect.left - size / 2;
-                const y = e.clientY - rect.top - size / 2;
-                
-                ripple.style.width = ripple.style.height = size + 'px';
-                ripple.style.left = x + 'px';
-                ripple.style.top = y + 'px';
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.background = 'rgba(255,255,255,0.3)';
-                ripple.style.transform = 'scale(0)';
-                ripple.style.animation = 'ripple 0.6s ease-out';
-                ripple.style.pointerEvents = 'none';
-                
-                this.style.position = 'relative';
-                this.style.overflow = 'hidden';
-                this.appendChild(ripple);
-                
-                setTimeout(() => ripple.remove(), 600);
-            });
-        });
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to { transform: scale(4); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
