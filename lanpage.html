@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SimuHustle | Test Hustles. Zero Risk.</title>
+    <title>SimHustle | Test Hustles. Zero Risk.</title>
     <meta name="description" content="Simulate 10+ side hustles with 6-month projections. See if your idea survives real market conditions before you invest.">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap');
@@ -986,7 +986,7 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="#" class="logo">SimuHustle</a>
+        <a href="#" class="logo">SimHustle</a>
         <a href="/demo" class="nav-cta">
             Try Demo
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -1023,7 +1023,7 @@
             </div>
         </div>
 
-        <a href="/demo" class="cta-main" onclick="triggerConfetti(event)">
+        <a href="/demo" class="cta-main" onclick="handleDemoClick(event)">
             Run Free Simulation
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
@@ -1208,7 +1208,7 @@
             <div class="cta-content">
                 <h2>Ready to Test Your Hustle?</h2>
                 <p>Free demo. No signup. See your 6-month projection in 60 seconds.</p>
-                <a href="/demo" class="cta-big" onclick="triggerConfetti(event)">
+                <a href="/demo" class="cta-big" onclick="handleDemoClick(event)">
                     Start Free Simulation
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </a>
@@ -1218,7 +1218,7 @@
 
     <!-- Disclaimer -->
     <section class="disclaimer">
-        <p class="disclaimer-text">Disclaimer: SimuHustle provides simulated business scenarios for educational and entertainment purposes only. Results are hypothetical and do not guarantee real-world outcomes. Users should conduct their own research before starting any business.</p>
+        <p class="disclaimer-text">Disclaimer: SimHustle provides simulated business scenarios for educational and entertainment purposes only. Results are hypothetical and do not guarantee real-world outcomes. Users should conduct their own research before starting any business.</p>
     </section>
 
     <!-- Streak Indicator -->
@@ -1228,9 +1228,12 @@
     </div>
 
     <script>
-        // Confetti effect with navigation
-        function triggerConfetti(e) {
+        // Handle demo button clicks with confetti and navigation
+        function handleDemoClick(e) {
             e.preventDefault();
+            const href = e.currentTarget.getAttribute('href');
+            
+            // Create confetti
             const colors = ['#8B5CF6', '#06B6D4', '#F97316', '#ffffff'];
             const rect = e.currentTarget.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -1275,8 +1278,9 @@
                 requestAnimationFrame(animate);
             }
             
+            // Navigate after confetti animation
             setTimeout(() => {
-                window.location.href = e.currentTarget.getAttribute('href');
+                window.location.href = href;
             }, 400);
         }
 
