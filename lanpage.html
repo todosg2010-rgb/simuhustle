@@ -853,6 +853,249 @@
         .fomo-time { font-size: 0.85rem; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; font-weight: 600; }
         .fomo-time svg { width: 14px; height: 14px; stroke: var(--accent); }
 
+        /* Personal Hustle Analysis Section - NEW */
+        .personal-analysis {
+            padding: 6rem 1.5rem;
+            background: linear-gradient(180deg, transparent, rgba(249, 115, 22, 0.05), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .personal-analysis::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(249, 115, 22, 0.3), transparent);
+        }
+
+        .analysis-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .analysis-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 2rem;
+            animation: analysisBadgeGlow 3s ease-in-out infinite;
+        }
+
+        .analysis-badge svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            animation: iconPulse 2s infinite;
+        }
+
+        @keyframes analysisBadgeGlow {
+            0%, 100% { box-shadow: 0 10px 30px rgba(249, 115, 22, 0.1); border-color: rgba(249, 115, 22, 0.3); }
+            50% { box-shadow: 0 15px 40px rgba(249, 115, 22, 0.2); border-color: rgba(249, 115, 22, 0.6); }
+        }
+
+        .analysis-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .analysis-subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .analysis-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            text-align: left;
+        }
+
+        @media (min-width: 768px) {
+            .analysis-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .analysis-feature {
+            background: rgba(21, 21, 32, 0.6);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(249, 115, 22, 0.4);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.1);
+        }
+
+        .analysis-feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .analysis-feature-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .analysis-feature-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .analysis-feature-content p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .analysis-pricing {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(245, 158, 11, 0.05));
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-tag .currency {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .price-tag .amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .price-tag .note {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        .analysis-cta {
+            background: linear-gradient(135deg, var(--accent), #ea580c, #f59e0b);
+            background-size: 200% 200%;
+            color: white;
+            padding: 1.4rem 3rem;
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2);
+            animation: analysisPulse 2.5s infinite, analysisGradient 4s ease-in-out infinite;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-cta svg {
+            width: 22px;
+            height: 22px;
+            stroke: white;
+            stroke-width: 2.5;
+        }
+
+        .analysis-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+
+        .analysis-cta:hover::before {
+            left: 100%;
+        }
+
+        .analysis-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.6), 0 0 80px rgba(249, 115, 22, 0.4);
+        }
+
+        @keyframes analysisPulse {
+            0%, 100% { box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2); }
+            50% { box-shadow: 0 20px 60px rgba(249, 115, 22, 0.6), 0 0 80px rgba(249, 115, 22, 0.4); }
+        }
+
+        @keyframes analysisGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .analysis-note {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-note svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+        }
+
         /* Final CTA */
         .final-cta { padding: 6rem 1.5rem; text-align: center; background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.2) 0%, transparent 60%); position: relative; }
         .final-cta::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B5CF6' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); opacity: 0.5; animation: bgPattern 20s linear infinite; }
@@ -1198,6 +1441,76 @@
                     12s ago
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personal Hustle Analysis Section - NEW -->
+    <section class="personal-analysis" id="personal-analysis">
+        <div class="analysis-container">
+            <div class="analysis-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Early Access Service
+            </div>
+            
+            <h2 class="analysis-title">Personal Hustle Analysis</h2>
+            <p class="analysis-subtitle">Get a custom simulation built specifically for your unique hustle idea. While SimHustle is still in demo, I'm offering personalized 1-on-1 analysis to help you validate your concept.</p>
+            
+            <div class="analysis-features">
+                <div class="analysis-feature">
+                    <div class="analysis-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                    </div>
+                    <div class="analysis-feature-content">
+                        <h4>Custom Report</h4>
+                        <p>Detailed 6-month projection tailored to your specific business model, market, and budget constraints.</p>
+                    </div>
+                </div>
+                <div class="analysis-feature">
+                    <div class="analysis-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    </div>
+                    <div class="analysis-feature-content">
+                        <h4>Expert Insights</h4>
+                        <p>Real feedback on your hustle viability, potential pitfalls, and optimization strategies from someone who's tested 100+ models.</p>
+                    </div>
+                </div>
+                <div class="analysis-feature">
+                    <div class="analysis-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                    </div>
+                    <div class="analysis-feature-content">
+                        <h4>Direct Communication</h4>
+                        <p>Email back-and-forth to refine your inputs and get answers to your specific questions about the simulation.</p>
+                    </div>
+                </div>
+                <div class="analysis-feature">
+                    <div class="analysis-feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <div class="analysis-feature-content">
+                        <h4>Actionable Data</h4>
+                        <p>Not just numbers—get a clear go/no-go recommendation with specific next steps if you decide to proceed.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="analysis-pricing">
+                <div class="price-tag">
+                    <span class="currency">€</span>
+                    <span class="amount">5-10</span>
+                    <span class="note">per analysis</span>
+                </div>
+            </div>
+            
+            <a href="/personal-analysis" class="analysis-cta">
+                Request Personal Analysis
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            
+            <div class="analysis-note">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                Limited spots available while building the full platform
             </div>
         </div>
     </section>

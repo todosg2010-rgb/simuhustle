@@ -194,6 +194,11 @@ def demo():
     with open("demo.html", "r", encoding="utf-8") as f:
         return f.read()
 
+@app.route("/personal-analysis")
+def personal_analysis():
+    with open("personal_analysis.html", "r", encoding="utf-8") as f:
+        return f.read()
+
 @app.route("/simulate", methods=["POST"])
 def simulate():
     data = request.json
@@ -244,5 +249,5 @@ def compare():
     })
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host="0.0.0.0", port=port, debug=False)
