@@ -96,6 +96,8 @@
             align-items: center;
             gap: 1.5rem;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5), 0 0 60px rgba(249, 115, 22, 0.1);
+            max-width: 90vw;
+            width: auto;
         }
 
         .logo {
@@ -105,6 +107,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .nav-back {
@@ -116,6 +119,7 @@
             align-items: center;
             gap: 0.4rem;
             transition: all 0.3s ease;
+            white-space: nowrap;
         }
 
         .nav-back:hover {
@@ -126,6 +130,7 @@
             width: 16px;
             height: 16px;
             stroke: currentColor;
+            flex-shrink: 0;
         }
 
         /* Main Container */
@@ -133,6 +138,7 @@
             max-width: 800px;
             margin: 0 auto;
             padding: 8rem 1.5rem 4rem;
+            width: 100%;
         }
 
         /* Header */
@@ -156,6 +162,8 @@
             letter-spacing: 0.15em;
             margin-bottom: 1.5rem;
             animation: badgeGlow 3s ease-in-out infinite;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         @keyframes badgeGlow {
@@ -167,24 +175,27 @@
             width: 16px;
             height: 16px;
             stroke: var(--accent);
+            flex-shrink: 0;
         }
 
         h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 800;
             line-height: 1.1;
             margin-bottom: 1rem;
             background: linear-gradient(135deg, var(--text) 0%, var(--accent) 50%, #f59e0b 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            word-break: break-word;
         }
 
         .subtitle {
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.7;
+            padding: 0 0.5rem;
         }
 
         /* Pricing Cards */
@@ -203,6 +214,9 @@
             padding: 1.5rem 2rem;
             text-align: center;
             transition: all 0.3s ease;
+            flex: 1;
+            min-width: 140px;
+            max-width: 200px;
         }
 
         .price-card:hover {
@@ -229,10 +243,11 @@
             border-radius: 100px;
             font-size: 0.7rem;
             font-weight: 700;
+            white-space: nowrap;
         }
 
         .price-amount {
-            font-size: 2.5rem;
+            font-size: clamp(2rem, 6vw, 2.5rem);
             font-weight: 800;
             color: var(--text);
             margin-bottom: 0.5rem;
@@ -243,95 +258,95 @@
             color: var(--text-muted);
         }
 
-        /* Email CTA Box */
-        .email-cta {
+        /* Tally CTA Box */
+        .tally-cta {
             background: rgba(21, 21, 32, 0.8);
             border: 1px solid rgba(249, 115, 22, 0.3);
             border-radius: 32px;
-            padding: 3rem 2.5rem;
+            padding: 2.5rem 1.5rem;
             text-align: center;
             backdrop-filter: blur(20px);
             box-shadow: 0 40px 80px rgba(0,0,0,0.4), 0 0 60px rgba(249, 115, 22, 0.1);
             margin-bottom: 3rem;
         }
 
-        .email-cta h2 {
-            font-size: 1.5rem;
+        .tally-cta h2 {
+            font-size: clamp(1.3rem, 5vw, 1.5rem);
             margin-bottom: 1rem;
             color: var(--text);
+            padding: 0 0.5rem;
         }
 
-        .email-cta p {
+        .tally-cta p {
             color: var(--text-muted);
             margin-bottom: 2rem;
             line-height: 1.7;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            padding: 0 0.5rem;
         }
 
-        .email-display {
+        .tally-button {
             display: inline-flex;
             align-items: center;
-            gap: 1rem;
-            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(245, 158, 11, 0.05));
-            border: 2px solid rgba(249, 115, 22, 0.4);
-            border-radius: 100px;
+            justify-content: center;
+            gap: 0.8rem;
+            background: linear-gradient(135deg, var(--accent), #ea580c, #f59e0b);
+            background-size: 200% 200%;
+            color: white;
             padding: 1.2rem 2rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text);
+            border-radius: 100px;
+            font-weight: 800;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             text-decoration: none;
+            box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2);
+            animation: btnPulse 2.5s infinite, btnGradient 4s ease-in-out infinite;
             transition: all 0.3s ease;
-            animation: emailPulse 3s ease-in-out infinite;
-        }
-
-        .email-display:hover {
-            transform: scale(1.05);
-            border-color: var(--accent);
-            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.3);
-        }
-
-        @keyframes emailPulse {
-            0%, 100% { box-shadow: 0 10px 30px rgba(249, 115, 22, 0.2); }
-            50% { box-shadow: 0 20px 50px rgba(249, 115, 22, 0.4); }
-        }
-
-        .email-display svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--accent);
-        }
-
-        .email-instructions {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(249, 115, 22, 0.1);
-            text-align: left;
-        }
-
-        .email-instructions h3 {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 1rem;
+            width: 100%;
+            max-width: 320px;
+            border: none;
+            cursor: pointer;
             text-align: center;
+            line-height: 1.2;
         }
 
-        .email-instructions ul {
-            list-style: none;
+        .tally-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.6);
+        }
+
+        .tally-button svg {
+            width: 22px;
+            height: 22px;
+            stroke: white;
+            stroke-width: 2.5;
+            flex-shrink: 0;
+        }
+
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 15px 50px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 20px 60px rgba(249, 115, 22, 0.6); }
+        }
+
+        @keyframes btnGradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+
+        .trust-badges span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
             color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 2;
-        }
-
-        .email-instructions li {
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .email-instructions li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 700;
+            white-space: nowrap;
         }
 
         /* How It Works */
@@ -342,7 +357,7 @@
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 6vw, 1.8rem);
             font-weight: 800;
             text-align: center;
             margin-bottom: 2rem;
@@ -353,37 +368,37 @@
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
         }
 
         .step {
             text-align: center;
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .step-number {
-            width: 50px;
-            height: 50px;
+            width: 45px;
+            height: 45px;
             background: linear-gradient(135deg, var(--accent), #ea580c);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin: 0 auto 1rem;
             box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
         }
 
         .step h3 {
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 4vw, 1.1rem);
             margin-bottom: 0.5rem;
             color: var(--text);
         }
 
         .step p {
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 3vw, 0.9rem);
             color: var(--text-muted);
             line-height: 1.6;
         }
@@ -399,7 +414,7 @@
             background: rgba(21, 21, 32, 0.4);
             border: 1px solid rgba(249, 115, 22, 0.1);
             border-radius: 16px;
-            padding: 1.5rem;
+            padding: 1.2rem;
             margin-bottom: 1rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -415,6 +430,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: clamp(0.95rem, 4vw, 1rem);
+            gap: 1rem;
         }
 
         .faq-question svg {
@@ -422,6 +439,7 @@
             height: 20px;
             stroke: var(--accent);
             transition: transform 0.3s ease;
+            flex-shrink: 0;
         }
 
         .faq-item.active .faq-question svg {
@@ -433,6 +451,7 @@
             margin-top: 1rem;
             line-height: 1.7;
             display: none;
+            font-size: clamp(0.9rem, 3.5vw, 0.95rem);
         }
 
         .faq-item.active .faq-answer {
@@ -448,14 +467,95 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 3rem 1.5rem;
+            padding: 3rem 1rem;
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 3vw, 0.9rem);
         }
 
         footer a {
             color: var(--accent);
             text-decoration: none;
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.6rem 1rem;
+                gap: 1rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-back {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 7rem 1rem 3rem;
+            }
+
+            .pricing {
+                gap: 0.8rem;
+            }
+
+            .price-card {
+                padding: 1.2rem 1rem;
+                min-width: 120px;
+            }
+
+            .tally-cta {
+                padding: 2rem 1rem;
+                border-radius: 24px;
+            }
+
+            .tally-button {
+                padding: 1rem 1.5rem;
+            }
+
+            .trust-badges {
+                gap: 0.8rem;
+            }
+
+            .trust-badges span {
+                font-size: 0.8rem;
+            }
+
+            .steps {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.8rem;
+            }
+
+            .step {
+                padding: 0.8rem;
+            }
+
+            .step-number {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
+            .faq-item {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .price-card {
+                max-width: 100%;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -468,7 +568,7 @@
     <nav>
         <a href="/" class="nav-back">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-            Back to Home
+            Back
         </a>
         <a href="/" class="logo">SimHustle</a>
     </nav>
@@ -494,24 +594,19 @@
             </div>
         </div>
 
-        <div class="email-cta">
+        <div class="tally-cta">
             <h2>Ready to get your analysis?</h2>
-            <p>Send me an email with your hustle details and I'll get back to you within 24 hours with payment instructions and next steps.</p>
+            <p>Fill out a quick 2-minute form and I'll get back to you within 24 hours with your custom hustle simulation.</p>
             
-            <a href="mailto:theodorgorchev@gmail.com?subject=Personal Hustle Analysis Request" class="email-display">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                theodorgorchev@gmail.com
+            <a href="https://tally.so/r/q4WbG2" target="_blank" class="tally-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Start My Analysis
             </a>
 
-            <div class="email-instructions">
-                <h3>What to include in your email:</h3>
-                <ul>
-                    <li>Your name and hustle idea</li>
-                    <li>Starting budget and hours per week available</li>
-                    <li>Your experience level (1-5)</li>
-                    <li>Specific questions you want answered</li>
-                    <li>Which option you want (€5 basic or €10 detailed)</li>
-                </ul>
+            <div class="trust-badges">
+                <span>  2 min</span>
+                <span>  No spam</span>
+                <span>  24h reply</span>
             </div>
         </div>
 
@@ -520,23 +615,23 @@
             <div class="steps">
                 <div class="step">
                     <div class="step-number">1</div>
-                    <h3>Send Email</h3>
-                    <p>Email me your hustle details and which option you want.</p>
+                    <h3>Fill Form</h3>
+                    <p>Tell me about your hustle idea in 2 minutes.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
                     <h3>Payment</h3>
-                    <p>I'll reply within 24h with PayPal/Revolut payment link.</p>
+                    <p>I'll email you PayPal/Revolut link within 24h.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">3</div>
                     <h3>Analysis</h3>
-                    <p>I run custom simulations and research your specific market.</p>
+                    <p>I research your market & run custom simulations.</p>
                 </div>
                 <div class="step">
                     <div class="step-number">4</div>
-                    <h3>Delivery</h3>
-                    <p>Receive your detailed report with projections and recommendations.</p>
+                    <h3>Results</h3>
+                    <p>Get your detailed report with projections.</p>
                 </div>
             </div>
         </div>
@@ -546,49 +641,49 @@
             
             <div class="faq-item">
                 <div class="faq-question">
-                    What's the difference between €5 and €10 analysis?
+                    What's the difference between €5 and €10?
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
-                    €5 gets you a basic 6-month projection with key metrics and a viability verdict. €10 includes detailed month-by-month breakdowns, competitor analysis, risk assessment, and specific action steps to improve your odds.
+                    €5 gets you a basic 6-month projection with key metrics and viability verdict. €10 includes detailed month-by-month breakdowns, competitor analysis, risk assessment, and specific action steps.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    How long does it take to get my analysis?
+                    How long does it take?
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
-                    After payment confirmation, you'll receive your analysis within 48 hours. Usually faster - often same day if submitted during business hours (CET).
+                    After payment, you'll receive your analysis within 48 hours. Usually same day if submitted during business hours (CET).
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Is this really personalized or automated?
+                    Is this personalized or automated?
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
-                    100% personalized. I manually research your specific niche, adjust the simulation parameters based on real market data, and write custom recommendations. This isn't a template - it's built for your exact situation.
+                    100% personalized. I manually research your niche, adjust simulation parameters with real market data, and write custom recommendations. Not a template - built for your exact situation.
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    What if my hustle idea is terrible?
+                    What if my idea is bad?
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
-                    I'll tell you honestly. Better to know now before you waste months and money. If it's not viable, I'll suggest pivots or alternative approaches that might work better with your constraints.
+                    I'll tell you honestly. Better to know now before wasting months and money. If not viable, I'll suggest pivots or alternatives that fit your constraints.
                 </div>
             </div>
         </div>
     </div>
 
     <footer>
-        <p>Questions? Email me directly at <a href="mailto:theodorgorchev@gmail.com">theodorgorchev@gmail.com</a></p>
-        <p style="margin-top: 0.5rem; opacity: 0.6;">© 2026 SimHustle. All simulations are estimates, not guarantees.</p>
+        <p>Questions? <a href="mailto:theodorgorchev@gmail.com">theodorgorchev@gmail.com</a></p>
+        <p style="margin-top: 0.5rem; opacity: 0.6;">© 2026 SimHustle. All simulations are estimates.</p>
     </footer>
 
     <script>

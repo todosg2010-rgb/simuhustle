@@ -39,6 +39,7 @@
             line-height: 1.5;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            padding-bottom: 80px; /* Space for sticky CTA */
         }
 
         /* Animated Background */
@@ -853,7 +854,7 @@
         .fomo-time { font-size: 0.85rem; color: var(--accent); white-space: nowrap; display: flex; align-items: center; gap: 0.4rem; font-weight: 600; }
         .fomo-time svg { width: 14px; height: 14px; stroke: var(--accent); }
 
-        /* Personal Hustle Analysis Section - NEW */
+        /* Personal Hustle Analysis Section */
         .personal-analysis {
             padding: 6rem 1.5rem;
             background: linear-gradient(180deg, transparent, rgba(249, 115, 22, 0.05), transparent);
@@ -1196,6 +1197,56 @@
         .flame-svg { width: 24px; height: 24px; stroke: var(--accent); fill: rgba(249, 115, 22, 0.3); animation: flameFlicker 0.8s infinite alternate; }
         @keyframes flameFlicker { 0% { transform: scale(1) rotate(-5deg); } 100% { transform: scale(1.2) rotate(5deg); } }
 
+        /* STICKY CTA - NEW */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 18, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+            border-top: 1px solid rgba(249, 115, 22, 0.3);
+            z-index: 998;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .sticky-cta.show {
+            transform: translateY(0);
+        }
+
+        .sticky-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--accent), #ea580c);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4);
+            animation: stickyPulse 2s infinite;
+        }
+
+        @keyframes stickyPulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(249, 115, 22, 0.4); }
+            50% { box-shadow: 0 15px 40px rgba(249, 115, 22, 0.6); }
+        }
+
+        .sticky-button svg {
+            width: 18px;
+            height: 18px;
+            stroke: white;
+            stroke-width: 2.5;
+        }
+
         /* Responsive */
         @media (min-width: 768px) {
             .hero h1 { font-size: 5rem; }
@@ -1209,6 +1260,18 @@
 
         @media (prefers-reduced-motion: reduce) {
             * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+        }
+
+        /* Mobile sticky CTA adjustments */
+        @media (max-width: 480px) {
+            .sticky-button {
+                font-size: 0.95rem;
+                padding: 0.9rem 1.2rem;
+            }
+            
+            body {
+                padding-bottom: 70px; /* More space for sticky bar */
+            }
         }
     </style>
 </head>
@@ -1445,7 +1508,7 @@
         </div>
     </section>
 
-    <!-- Personal Hustle Analysis Section - NEW -->
+    <!-- Personal Hustle Analysis Section -->
     <section class="personal-analysis" id="personal-analysis">
         <div class="analysis-container">
             <div class="analysis-badge">
@@ -1454,7 +1517,7 @@
             </div>
             
             <h2 class="analysis-title">Personal Hustle Analysis</h2>
-            <p class="analysis-subtitle">Get a custom simulation built specifically for your unique hustle idea. While SimHustle is still in demo, I'm offering personalized 1-on-1 analysis to help you validate your concept.</p>
+            <p class="analysis-subtitle">While SimHustle is still in demo mode, I'm offering custom simulations built specifically for your unique business idea. Get expert insights before you invest time or money.</p>
             
             <div class="analysis-features">
                 <div class="analysis-feature">
@@ -1538,6 +1601,14 @@
     <div class="streak-indicator">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flame-svg"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
         <span>247 sims today</span>
+    </div>
+
+    <!-- STICKY CTA - NEW -->
+    <div class="sticky-cta" id="stickyCta">
+        <a href="https://tally.so/r/q4WbG2" target="_blank" class="sticky-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Get Personal Analysis - €5-10
+        </a>
     </div>
 
     <script>
@@ -1652,6 +1723,18 @@
                     ticking = false;
                 });
                 ticking = true;
+            }
+        });
+
+        // STICKY CTA - Show after scrolling past hero
+        window.addEventListener('scroll', () => {
+            const stickyCta = document.getElementById('stickyCta');
+            const heroHeight = window.innerHeight * 0.8; // Show after 80% of viewport
+            
+            if (window.scrollY > heroHeight) {
+                stickyCta.classList.add('show');
+            } else {
+                stickyCta.classList.remove('show');
             }
         });
     </script>
