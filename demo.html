@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimuHustle | Run Your 6-Month Simulation</title>
+    <title>SimHustle | Run Your 6-Month Simulation</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap');
         
@@ -15,17 +15,23 @@
 
         :root {
             --primary: #8B5CF6;
+            --primary-glow: rgba(139, 92, 246, 0.6);
             --secondary: #06B6D4;
+            --secondary-glow: rgba(6, 182, 212, 0.6);
             --accent: #F97316;
-            --base: #020204;
-            --surface: #0a0a12;
-            --surface-2: #151520;
+            --accent-glow: rgba(249, 115, 22, 0.6);
+            --base: #050508;
+            --surface: #0f0f16;
+            --surface-2: #1a1a25;
+            --surface-3: #252535;
             --text: #ffffff;
-            --text-muted: #6b6b7b;
-            --glow: rgba(139, 92, 246, 0.5);
+            --text-muted: #8b8b9b;
             --success: #10b981;
             --danger: #ef4444;
             --warning: #f59e0b;
+            --neon-purple: #a855f7;
+            --neon-cyan: #22d3ee;
+            --neon-orange: #fb923c;
         }
 
         body {
@@ -35,9 +41,10 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
+            position: relative;
         }
 
-        /* Background Effects */
+        /* Animated Background Grid */
         .bg-grid {
             position: fixed;
             top: 0;
@@ -46,17 +53,19 @@
             height: 100%;
             z-index: -3;
             background-image: 
-                linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: gridMove 25s linear infinite;
+                linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
 
         @keyframes gridMove {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
+            100% { transform: translate(50px, 50px); }
         }
 
+        /* Floating Particles */
         .particles {
             position: fixed;
             top: 0;
@@ -65,33 +74,36 @@
             height: 100%;
             z-index: -2;
             overflow: hidden;
+            pointer-events: none;
         }
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
+            width: 3px;
+            height: 3px;
             background: var(--primary);
             border-radius: 50%;
-            opacity: 0.3;
-            animation: float-up 15s infinite;
+            opacity: 0.4;
+            animation: float-up 20s infinite;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
-        .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 18s; background: var(--secondary); }
-        .particle:nth-child(3) { left: 35%; animation-delay: 4s; animation-duration: 14s; }
-        .particle:nth-child(4) { left: 50%; animation-delay: 1s; animation-duration: 20s; background: var(--accent); }
-        .particle:nth-child(5) { left: 65%; animation-delay: 3s; animation-duration: 16s; background: var(--secondary); }
-        .particle:nth-child(6) { left: 80%; animation-delay: 5s; animation-duration: 13s; }
-        .particle:nth-child(7) { left: 90%; animation-delay: 2.5s; animation-duration: 19s; background: var(--accent); }
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 15s; background: var(--primary); }
+        .particle:nth-child(2) { left: 20%; animation-delay: 2s; animation-duration: 18s; background: var(--secondary); box-shadow: 0 0 10px var(--secondary-glow); }
+        .particle:nth-child(3) { left: 35%; animation-delay: 4s; animation-duration: 14s; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .particle:nth-child(4) { left: 50%; animation-delay: 1s; animation-duration: 22s; background: var(--neon-purple); }
+        .particle:nth-child(5) { left: 65%; animation-delay: 3s; animation-duration: 16s; background: var(--secondary); box-shadow: 0 0 10px var(--secondary-glow); }
+        .particle:nth-child(6) { left: 80%; animation-delay: 5s; animation-duration: 19s; background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .particle:nth-child(7) { left: 90%; animation-delay: 2.5s; animation-duration: 17s; background: var(--primary); }
 
         @keyframes float-up {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
         }
 
+        /* Aurora Background */
         .aurora {
             position: fixed;
             top: 0;
@@ -100,15 +112,56 @@
             height: 100%;
             z-index: -1;
             background: 
-                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
-            filter: blur(80px);
-            animation: auroraShift 20s ease-in-out infinite;
+                radial-gradient(ellipse at 20% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.08) 0%, transparent 60%);
+            filter: blur(60px);
+            animation: auroraShift 15s ease-in-out infinite;
         }
 
         @keyframes auroraShift {
             0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
-            50% { transform: translate(50px, -50px) scale(1.2) rotate(5deg); opacity: 0.7; }
+            33% { transform: translate(30px, -30px) scale(1.1) rotate(2deg); opacity: 0.8; }
+            66% { transform: translate(-20px, 20px) scale(1.05) rotate(-1deg); opacity: 0.9; }
+        }
+
+        /* Neon Text Animation */
+        .neon-text {
+            animation: neonPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 10px var(--primary-glow),
+                    0 0 20px var(--primary-glow),
+                    0 0 40px var(--primary-glow);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 20px var(--secondary-glow),
+                    0 0 40px var(--secondary-glow),
+                    0 0 60px var(--secondary-glow);
+            }
+        }
+
+        .neon-text-orange {
+            animation: neonOrange 3s ease-in-out infinite;
+        }
+
+        @keyframes neonOrange {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 10px var(--accent-glow),
+                    0 0 20px var(--accent-glow),
+                    0 0 40px rgba(249, 115, 22, 0.4);
+            }
+            50% { 
+                text-shadow: 
+                    0 0 20px rgba(251, 146, 60, 0.8),
+                    0 0 40px rgba(251, 146, 60, 0.6),
+                    0 0 60px rgba(251, 146, 60, 0.4);
+            }
         }
 
         /* Navigation */
@@ -116,40 +169,41 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1.5rem 5%;
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(2, 2, 4, 0.8);
+            background: rgba(5, 5, 8, 0.85);
             backdrop-filter: blur(20px);
             z-index: 1000;
-            border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
         }
 
         .logo {
             font-size: 1.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--text) 0%, var(--primary) 50%, var(--secondary) 100%);
+            background: linear-gradient(135deg, var(--text) 0%, var(--neon-cyan) 50%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
-            animation: glow 3s ease-in-out infinite;
+            animation: logoGlow 4s ease-in-out infinite;
+            letter-spacing: -0.02em;
         }
 
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3)); }
-            50% { filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.6)); }
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.4)); }
+            50% { filter: drop-shadow(0 0 40px rgba(6, 182, 212, 0.6)); }
         }
 
         .btn {
-            padding: 0.9rem 2rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 12px;
             font-weight: 700;
             text-decoration: none;
-            transition: all 0.4s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             position: relative;
             overflow: hidden;
             text-transform: uppercase;
@@ -165,7 +219,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.6s;
+            transition: left 0.5s;
         }
 
         .btn:hover::before {
@@ -176,11 +230,12 @@
             background: linear-gradient(135deg, var(--accent), #ea580c);
             color: white;
             box-shadow: 0 4px 30px rgba(249, 115, 22, 0.4);
+            border: 1px solid rgba(251, 146, 60, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 50px rgba(249, 115, 22, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(249, 115, 22, 0.6);
         }
 
         .btn-secondary {
@@ -190,49 +245,66 @@
         }
 
         .btn-secondary:hover {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(139, 92, 246, 0.15);
             border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
 
         .btn-toggle {
             background: var(--surface);
             color: var(--text-muted);
             border: 2px solid rgba(139, 92, 246, 0.3);
-            padding: 1rem 2rem;
+            padding: 0.9rem 1.8rem;
             font-weight: 700;
+            font-size: 0.9rem;
         }
 
         .btn-toggle.active {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-color: transparent;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+            animation: activePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes activePulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 0 50px rgba(6, 182, 212, 0.5); }
         }
 
         /* Main Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 8rem 5% 4rem;
+            padding: 7rem 4% 4rem;
         }
 
         .page-header {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
 
         .page-header h1 {
-            font-size: 3rem;
+            font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--text), var(--primary));
+            margin-bottom: 0.75rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--neon-cyan) 50%, var(--primary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientShift 5s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
         }
 
         .page-header p {
             color: var(--text-muted);
-            font-size: 1.2rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* Mode Toggle */
@@ -240,18 +312,20 @@
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
         }
 
-        /* Single Mode Form */
+        /* Form Styling */
         .simulation-form {
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(139, 92, 246, 0.25);
             border-radius: 24px;
-            padding: 3rem;
-            margin-bottom: 3rem;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .simulation-form::before {
@@ -261,13 +335,30 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 100%;
+            animation: borderGlow 4s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .simulation-form {
+                padding: 1.5rem;
+            }
         }
 
         .form-group {
@@ -281,7 +372,7 @@
 
         .form-group label {
             color: var(--text-muted);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             text-transform: uppercase;
@@ -290,10 +381,10 @@
 
         .form-group input,
         .form-group select {
-            padding: 1rem 1.2rem;
+            padding: 0.9rem 1.1rem;
             border-radius: 12px;
             border: 1px solid rgba(139, 92, 246, 0.3);
-            background: rgba(2, 2, 4, 0.6);
+            background: rgba(5, 5, 8, 0.6);
             color: var(--text);
             font-size: 1rem;
             font-family: inherit;
@@ -304,50 +395,59 @@
         .form-group select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
         }
 
         .form-group input::placeholder {
             color: var(--text-muted);
+            opacity: 0.6;
         }
 
         .scenario-selector {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
         }
 
         .scenario-btn {
             flex: 1;
-            min-width: 120px;
-            padding: 1rem;
+            min-width: 100px;
+            padding: 0.9rem;
             border: 1px solid rgba(139, 92, 246, 0.3);
-            background: rgba(2, 2, 4, 0.6);
+            background: rgba(5, 5, 8, 0.6);
             color: var(--text-muted);
             border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s;
             font-family: inherit;
             font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .scenario-btn.active {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border-color: transparent;
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+            animation: scenarioPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes scenarioPulse {
+            0%, 100% { box-shadow: 0 0 25px rgba(139, 92, 246, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(6, 182, 212, 0.5); }
         }
 
         .scenario-btn:hover:not(.active) {
             border-color: var(--primary);
             color: var(--text);
+            background: rgba(139, 92, 246, 0.1);
         }
 
         .generate-btn {
             width: 100%;
-            margin-top: 2rem;
-            padding: 1.5rem;
-            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.1rem;
             background: linear-gradient(135deg, var(--accent), #ea580c);
             color: white;
             border: none;
@@ -359,11 +459,12 @@
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3);
         }
 
         .generate-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.4);
+            box-shadow: 0 20px 60px rgba(249, 115, 22, 0.5);
         }
 
         .generate-btn:disabled {
@@ -384,8 +485,8 @@
         /* Compare Mode */
         .compare-container {
             display: none;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
         }
 
         .compare-container.active {
@@ -403,9 +504,10 @@
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 2px solid rgba(139, 92, 246, 0.2);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 2rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .compare-side.a-side::before {
@@ -416,6 +518,7 @@
             width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: borderGlow 4s linear infinite;
         }
 
         .compare-side.b-side::before {
@@ -426,21 +529,26 @@
             width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--accent), var(--danger));
+            animation: borderGlow 4s linear infinite reverse;
         }
 
         .compare-side h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
             text-align: center;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         .compare-side.a-side h3 {
-            color: var(--secondary);
+            color: var(--neon-cyan);
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
         }
 
         .compare-side.b-side h3 {
-            color: var(--accent);
+            color: var(--neon-orange);
+            text-shadow: 0 0 20px rgba(251, 146, 60, 0.4);
         }
 
         .vs-badge {
@@ -457,8 +565,14 @@
             justify-content: center;
             font-weight: 800;
             font-size: 1.2rem;
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
             z-index: 10;
+            animation: vsPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes vsPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 40px rgba(139, 92, 246, 0.6); }
+            50% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 60px rgba(6, 182, 212, 0.7); }
         }
 
         @media (max-width: 968px) {
@@ -467,7 +581,7 @@
             }
         }
 
-        /* Loading Screen */
+        /* 3D Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0;
@@ -480,6 +594,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            perspective: 1000px;
         }
 
         .loading-screen.active {
@@ -495,23 +610,32 @@
 
         .loading-particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
             background: var(--primary);
             border-radius: 50%;
             animation: loadingFloat 3s infinite;
+            box-shadow: 0 0 10px var(--primary-glow);
         }
 
         @keyframes loadingFloat {
-            0%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
-            50% { transform: translateY(-100px) scale(1.5); opacity: 1; }
+            0%, 100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 0.5; }
+            50% { transform: translateY(-100px) scale(1.5) rotate(180deg); opacity: 1; }
         }
 
+        /* 3D Core Animation */
         .loading-core {
             width: 200px;
             height: 200px;
             position: relative;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
+            transform-style: preserve-3d;
+            animation: coreRotate 10s linear infinite;
+        }
+
+        @keyframes coreRotate {
+            0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+            100% { transform: rotateX(360deg) rotateY(180deg) rotateZ(360deg); }
         }
 
         .loading-ring {
@@ -522,46 +646,81 @@
             border: 3px solid transparent;
             border-top-color: var(--primary);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin3d 2s linear infinite;
         }
 
-        .loading-ring:nth-child(1) { width: 200px; height: 200px; animation-duration: 1s; border-width: 4px; }
-        .loading-ring:nth-child(2) { width: 160px; height: 160px; border-top-color: var(--secondary); animation-duration: 1.5s; animation-direction: reverse; border-width: 3px; }
-        .loading-ring:nth-child(3) { width: 120px; height: 120px; border-top-color: var(--accent); animation-duration: 2s; border-width: 2px; }
-        .loading-ring:nth-child(4) { width: 80px; height: 80px; border-top-color: var(--primary); animation-duration: 0.8s; animation-direction: reverse; border-width: 3px; }
+        .loading-ring:nth-child(1) { 
+            width: 200px; 
+            height: 200px; 
+            animation-duration: 3s; 
+            border-width: 4px;
+            border-top-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+        .loading-ring:nth-child(2) { 
+            width: 160px; 
+            height: 160px; 
+            border-top-color: var(--secondary); 
+            animation-duration: 2.5s; 
+            animation-direction: reverse; 
+            border-width: 3px;
+            box-shadow: 0 0 20px var(--secondary-glow);
+            transform: translate(-50%, -50%) rotateX(45deg);
+        }
+        .loading-ring:nth-child(3) { 
+            width: 120px; 
+            height: 120px; 
+            border-top-color: var(--accent); 
+            animation-duration: 2s; 
+            border-width: 3px;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: translate(-50%, -50%) rotateY(45deg);
+        }
+        .loading-ring:nth-child(4) { 
+            width: 80px; 
+            height: 80px; 
+            border-top-color: var(--neon-purple); 
+            animation-duration: 1.5s; 
+            animation-direction: reverse; 
+            border-width: 4px;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+            transform: translate(-50%, -50%) rotateX(90deg);
+        }
 
-        @keyframes spin {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+        @keyframes spin3d {
+            0% { transform: translate(-50%, -50%) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateZ(360deg); }
         }
 
         .loading-text {
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
             font-weight: 800;
             color: var(--text);
             margin-bottom: 0.5rem;
-            animation: pulse-text 1.5s infinite;
+            animation: textPulse 1.5s infinite;
+            text-shadow: 0 0 30px var(--primary-glow);
         }
 
-        @keyframes pulse-text {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes textPulse {
+            0%, 100% { opacity: 1; text-shadow: 0 0 30px var(--primary-glow); }
+            50% { opacity: 0.7; text-shadow: 0 0 50px var(--secondary-glow); }
         }
 
         .loading-subtext {
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 2rem;
         }
 
         .loading-progress {
-            width: 400px;
+            width: min(400px, 80vw);
             height: 6px;
             background: rgba(139, 92, 246, 0.2);
             border-radius: 3px;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             overflow: hidden;
             position: relative;
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
         }
 
         .loading-bar {
@@ -571,6 +730,7 @@
             border-radius: 3px;
             animation: progress 6s ease-out, shimmer 2s infinite;
             width: 100%;
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         @keyframes progress {
@@ -585,8 +745,10 @@
 
         .loading-stats {
             display: flex;
-            gap: 4rem;
-            margin-top: 3rem;
+            gap: 3rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .loading-stat {
@@ -594,17 +756,25 @@
         }
 
         .loading-stat-value {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 800;
-            color: var(--primary);
+            color: var(--neon-cyan);
             display: block;
+            text-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+            animation: statGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes statGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(34, 211, 238, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(34, 211, 238, 0.8); }
         }
 
         .loading-stat-label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            margin-top: 0.25rem;
         }
 
         /* Results Section */
@@ -626,22 +796,24 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 1rem;
         }
 
         .results-header h2 {
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 800;
-            background: linear-gradient(135deg, var(--text), var(--primary));
+            background: linear-gradient(135deg, var(--text), var(--neon-cyan));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(34, 211, 238, 0.3);
         }
 
         .results-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         /* Analysis Card */
@@ -649,10 +821,11 @@
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 2px solid rgba(139, 92, 246, 0.3);
             border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .analysis-card::before {
@@ -663,6 +836,7 @@
             width: 100%;
             height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: borderGlow 4s linear infinite;
         }
 
         .analysis-card.success::before {
@@ -681,66 +855,86 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
         }
 
         .analysis-icon {
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2));
-            border: 2px solid rgba(139, 92, 246, 0.3);
+            border: 2px solid rgba(139, 92, 246, 0.4);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+            animation: iconPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.4); }
         }
 
         .analysis-card.success .analysis-icon {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(52, 211, 153, 0.2));
             border-color: var(--success);
             color: var(--success);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
 
         .analysis-card.warning .analysis-icon {
             background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(251, 191, 36, 0.2));
             border-color: var(--warning);
             color: var(--warning);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
         }
 
         .analysis-card.danger .analysis-icon {
             background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(248, 113, 113, 0.2));
             border-color: var(--danger);
             color: var(--danger);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
         }
 
         .analysis-title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
         }
 
         .analysis-text {
             color: var(--text-muted);
             line-height: 1.8;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
         }
 
         .analysis-factors {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
             border-top: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .analysis-factors {
+                grid-template-columns: 1fr;
+            }
         }
 
         .analysis-factor {
             text-align: center;
+            padding: 1rem;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
         }
 
         .analysis-factor-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -748,33 +942,46 @@
         }
 
         .analysis-factor-value {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: var(--text);
         }
 
-        .analysis-factor-value.positive { color: var(--success); }
-        .analysis-factor-value.negative { color: var(--danger); }
-        .analysis-factor-value.warning { color: var(--warning); }
+        .analysis-factor-value.positive { color: var(--success); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+        .analysis-factor-value.negative { color: var(--danger); text-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+        .analysis-factor-value.warning { color: var(--warning); text-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
 
         /* Summary Cards */
         .summary-cards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .summary-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .summary-cards {
+                grid-template-columns: 1fr;
+            }
         }
 
         .summary-card {
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             position: relative;
             overflow: hidden;
             transition: all 0.4s;
             animation: cardFloat 4s ease-in-out infinite;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .summary-card:nth-child(1) { animation-delay: 0s; }
@@ -788,9 +995,9 @@
         }
 
         .summary-card:hover {
-            transform: translateY(-10px) scale(1.02);
+            transform: translateY(-8px) scale(1.02);
             border-color: rgba(139, 92, 246, 0.5);
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.2);
         }
 
         .summary-card::before {
@@ -801,6 +1008,7 @@
             width: 100%;
             height: 3px;
             background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: borderGlow 4s linear infinite;
         }
 
         .summary-card.positive::before {
@@ -813,7 +1021,7 @@
 
         .summary-label {
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             margin-bottom: 0.75rem;
@@ -821,24 +1029,40 @@
         }
 
         .summary-value {
-            font-size: 2.2rem;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
             font-weight: 800;
             color: var(--text);
             line-height: 1;
+            word-break: break-word;
         }
 
-        .summary-value.positive { color: var(--success); }
-        .summary-value.negative { color: var(--danger); }
+        .summary-value.positive { 
+            color: var(--success); 
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            animation: valueGlow 2s ease-in-out infinite;
+        }
+        
+        .summary-value.negative { 
+            color: var(--danger); 
+            text-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+
+        @keyframes valueGlow {
+            0%, 100% { text-shadow: 0 0 20px rgba(16, 185, 129, 0.4); }
+            50% { text-shadow: 0 0 30px rgba(16, 185, 129, 0.6); }
+        }
 
         /* Monthly Table */
         .monthly-section {
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 1px solid rgba(139, 92, 246, 0.2);
             border-radius: 24px;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             position: relative;
             overflow: hidden;
+            overflow-x: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .monthly-section::before {
@@ -853,8 +1077,8 @@
         }
 
         .monthly-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -865,13 +1089,14 @@
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
+            min-width: 600px;
         }
 
         .monthly-table th {
             text-align: left;
-            padding: 1.2rem 1rem;
+            padding: 1rem;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             font-weight: 600;
@@ -879,9 +1104,10 @@
         }
 
         .monthly-table td {
-            padding: 1.5rem 1rem;
+            padding: 1.25rem 1rem;
             border-bottom: 1px solid rgba(139, 92, 246, 0.1);
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
         .monthly-table tr:hover td {
@@ -895,20 +1121,23 @@
 
         .month-cell {
             font-weight: 800;
-            color: var(--primary);
+            color: var(--neon-cyan);
             font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
         }
 
         .profit-positive {
             color: var(--success);
             font-weight: 700;
             font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
         }
 
         .profit-negative {
             color: var(--danger);
             font-weight: 700;
             font-size: 1.1rem;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
         }
 
         /* Compare Results */
@@ -924,17 +1153,18 @@
         .winner-banner {
             background: linear-gradient(135deg, var(--success), #34d399);
             border-radius: 20px;
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
             animation: winnerPulse 2s infinite;
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
         }
 
         @keyframes winnerPulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.3); }
-            50% { box-shadow: 0 0 80px rgba(16, 185, 129, 0.5); }
+            0%, 100% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.4); }
+            50% { box-shadow: 0 0 80px rgba(16, 185, 129, 0.6); }
         }
 
         .winner-banner::before {
@@ -944,20 +1174,21 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
             animation: rotate 20s linear infinite;
         }
 
         .winner-title {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
             font-weight: 800;
             color: white;
             position: relative;
             z-index: 1;
+            text-shadow: 0 0 20px rgba(255,255,255,0.5);
         }
 
         .winner-subtitle {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: rgba(255,255,255,0.9);
             margin-top: 0.5rem;
             position: relative;
@@ -967,8 +1198,8 @@
         .compare-dashboard {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 3rem;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         @media (max-width: 968px) {
@@ -981,30 +1212,40 @@
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 2px solid rgba(139, 92, 246, 0.2);
             border-radius: 24px;
-            padding: 2.5rem;
+            padding: 2rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
 
         .compare-result-side.winner {
             border-color: var(--success);
             box-shadow: 0 0 60px rgba(16, 185, 129, 0.2);
+            animation: winnerBorder 2s ease-in-out infinite;
+        }
+
+        @keyframes winnerBorder {
+            0%, 100% { box-shadow: 0 0 60px rgba(16, 185, 129, 0.2); }
+            50% { box-shadow: 0 0 80px rgba(16, 185, 129, 0.4); }
         }
 
         .compare-result-side.loser {
             border-color: rgba(139, 92, 246, 0.2);
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .compare-result-side h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 1.25rem;
             text-align: center;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .compare-result-side.winner h4 {
             color: var(--success);
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
         }
 
         .compare-result-side.loser h4 {
@@ -1016,17 +1257,18 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.5rem;
-            box-shadow: 0 0 60px rgba(139, 92, 246, 0.5);
+            font-size: 1.3rem;
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.6);
             z-index: 10;
+            animation: vsPulse 2s ease-in-out infinite;
         }
 
         @media (max-width: 968px) {
@@ -1038,20 +1280,32 @@
         .compare-metrics {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .compare-metrics {
+                grid-template-columns: 1fr;
+            }
         }
 
         .compare-metric {
             text-align: center;
-            padding: 1.5rem;
-            background: rgba(2, 2, 4, 0.4);
+            padding: 1.25rem;
+            background: rgba(5, 5, 8, 0.4);
             border-radius: 16px;
             border: 1px solid rgba(139, 92, 246, 0.1);
+            transition: all 0.3s;
+        }
+
+        .compare-metric:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.3);
         }
 
         .compare-metric-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -1059,27 +1313,35 @@
         }
 
         .compare-metric-value {
-            font-size: 2rem;
+            font-size: clamp(1.5rem, 3vw, 2rem);
             font-weight: 800;
             color: var(--text);
+            word-break: break-word;
         }
 
-        .compare-metric-value.positive { color: var(--success); }
-        .compare-metric-value.negative { color: var(--danger); }
+        .compare-metric-value.positive { 
+            color: var(--success); 
+            text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .compare-metric-value.negative { 
+            color: var(--danger); 
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
 
         .why-won {
             background: rgba(16, 185, 129, 0.1);
             border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
         }
 
         .why-won h5 {
             color: var(--success);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 0.75rem;
             font-weight: 700;
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
         }
 
         .why-won p {
@@ -1092,15 +1354,16 @@
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
             border-radius: 16px;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
+            padding: 1.25rem;
+            margin-top: 1.25rem;
         }
 
         .why-lost h5 {
             color: var(--danger);
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 0.75rem;
             font-weight: 700;
+            text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
         }
 
         .why-lost p {
@@ -1116,12 +1379,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(2, 2, 4, 0.95);
+            background: rgba(5, 5, 8, 0.95);
             backdrop-filter: blur(20px);
             z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 1rem;
         }
 
         .share-modal.active {
@@ -1132,9 +1396,9 @@
             background: linear-gradient(135deg, var(--surface), var(--surface-2));
             border: 2px solid rgba(139, 92, 246, 0.4);
             border-radius: 32px;
-            padding: 3rem;
+            padding: 2.5rem;
             max-width: 700px;
-            width: 90%;
+            width: 100%;
             position: relative;
             animation: scaleIn 0.4s ease-out;
             box-shadow: 0 0 100px rgba(139, 92, 246, 0.3);
@@ -1147,13 +1411,15 @@
 
         .share-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .share-header h3 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             font-weight: 800;
+            color: var(--text);
+            text-shadow: 0 0 20px var(--primary-glow);
         }
 
         .share-header p {
@@ -1164,14 +1430,15 @@
             background: var(--base);
             border: 2px solid rgba(139, 92, 246, 0.3);
             border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
             position: relative;
             font-family: 'Space Grotesk', monospace;
-            font-size: 0.95rem;
-            line-height: 1.8;
-            max-height: 400px;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-height: 350px;
             overflow-y: auto;
+            box-shadow: inset 0 0 30px rgba(139, 92, 246, 0.1);
         }
 
         .watermark {
@@ -1193,13 +1460,13 @@
 
         .share-btn {
             flex: 1;
-            padding: 1.2rem;
+            padding: 1rem;
             border-radius: 16px;
             border: none;
             cursor: pointer;
             font-weight: 700;
             font-family: inherit;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -1221,14 +1488,18 @@
             transform: translateY(-3px);
         }
 
+        .share-btn.primary:hover {
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
+        }
+
         .close-modal {
             position: absolute;
-            top: 1.5rem;
-            right: 1.5rem;
+            top: 1.25rem;
+            right: 1.25rem;
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 2rem;
+            font-size: 1.8rem;
             cursor: pointer;
             transition: all 0.3s;
             width: 40px;
@@ -1242,6 +1513,7 @@
         .close-modal:hover {
             color: var(--text);
             background: rgba(139, 92, 246, 0.2);
+            transform: rotate(90deg);
         }
 
         .copied-toast {
@@ -1251,14 +1523,15 @@
             transform: translateX(-50%) translateY(100px);
             background: linear-gradient(135deg, var(--success), #34d399);
             color: white;
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2rem;
             border-radius: 16px;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0;
             transition: all 0.4s;
             z-index: 10001;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
         }
 
         .copied-toast.active {
@@ -1266,40 +1539,90 @@
             opacity: 1;
         }
 
-        /* Responsive */
+        /* Mobile Optimizations */
         @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 6rem 3% 3rem;
             }
             
-            .summary-cards {
-                grid-template-columns: repeat(2, 1fr);
+            nav {
+                padding: 1rem 3%;
             }
             
-            .analysis-factors {
-                grid-template-columns: 1fr;
+            .logo {
+                font-size: 1.5rem;
             }
             
-            .monthly-table {
+            .btn {
+                padding: 0.7rem 1.2rem;
                 font-size: 0.85rem;
             }
             
-            .monthly-table th,
-            .monthly-table td {
-                padding: 0.8rem 0.5rem;
+            .mode-toggle {
+                gap: 0.5rem;
             }
             
-            .loading-progress {
-                width: 300px;
+            .btn-toggle {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.8rem;
             }
             
-            .loading-stats {
-                gap: 2rem;
+            .compare-side {
+                padding: 1.5rem;
             }
+            
+            .analysis-card {
+                padding: 1.5rem;
+            }
+            
+            .monthly-section {
+                padding: 1.5rem;
+            }
+            
+            .results-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .results-actions {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .share-content {
+                padding: 1.5rem;
+                border-radius: 24px;
+            }
+            
+            .share-buttons {
+                flex-direction: column;
+            }
+        }
 
-            .compare-metrics {
-                grid-template-columns: 1fr;
-            }
+        /* Prevent text overflow */
+        .summary-value, .compare-metric-value, .analysis-factor-value {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
         }
     </style>
 </head>
@@ -1319,7 +1642,7 @@
 
     <!-- Navigation -->
     <nav>
-        <a href="/" class="logo">SimuHustle</a>
+        <a href="/" class="logo">SimHustle</a>
         <div class="nav-links">
             <a href="/" class="btn btn-secondary">Back to Home</a>
         </div>
@@ -1328,7 +1651,7 @@
     <!-- Main Container -->
     <div class="container">
         <div class="page-header">
-            <h1>Run Your Simulation</h1>
+            <h1 class="neon-text">Run Your Simulation</h1>
             <p>Single hustle deep-dive or compare two side-by-side</p>
         </div>
 
@@ -1392,13 +1715,13 @@
                 </div>
             </div>
 
-            <button type="submit" class="generate-btn">Generate 6-Month Projection</button>
+            <button type="submit" class="generate-btn neon-text-orange">Generate 6-Month Projection</button>
         </form>
 
         <!-- Compare Mode Forms -->
         <div class="compare-container" id="compareContainer">
             <div class="compare-side a-side">
-                <h3>HUSTLE A</h3>
+                <h3>Hustle A</h3>
                 <form id="compareFormA">
                     <div class="form-group full-width">
                         <label>Select Hustle</label>
@@ -1455,7 +1778,7 @@
             <div class="vs-badge">VS</div>
 
             <div class="compare-side b-side">
-                <h3>HUSTLE B</h3>
+                <h3>Hustle B</h3>
                 <form id="compareFormB">
                     <div class="form-group full-width">
                         <label>Select Hustle</label>
@@ -1510,12 +1833,12 @@
             </div>
         </div>
 
-        <button type="button" class="generate-btn" id="compareGenerateBtn" style="display: none;" onclick="runComparison()">Run Head-to-Head Comparison</button>
+        <button type="button" class="generate-btn neon-text-orange" id="compareGenerateBtn" style="display: none;" onclick="runComparison()">Run Head-to-Head Comparison</button>
 
         <!-- Single Results -->
         <div class="results-section" id="singleResults">
             <div class="results-header">
-                <h2>Your Simulation Results</h2>
+                <h2 class="neon-text">Your Simulation Results</h2>
                 <div class="results-actions">
                     <button class="btn btn-secondary" onclick="newSimulation()">New Simulation</button>
                     <button class="btn btn-primary" onclick="openShare()">Share Results</button>
@@ -1537,26 +1860,28 @@
 
             <div class="monthly-section">
                 <h3>Month-by-Month Breakdown</h3>
-                <table class="monthly-table">
-                    <thead>
-                        <tr>
-                            <th>Month</th>
-                            <th>Traffic</th>
-                            <th>Customers</th>
-                            <th>Revenue</th>
-                            <th>Expenses</th>
-                            <th>Net Profit</th>
-                        </tr>
-                    </thead>
-                    <tbody id="monthlyTableBody"></tbody>
-                </table>
+                <div style="overflow-x: auto;">
+                    <table class="monthly-table">
+                        <thead>
+                            <tr>
+                                <th>Month</th>
+                                <th>Traffic</th>
+                                <th>Customers</th>
+                                <th>Revenue</th>
+                                <th>Expenses</th>
+                                <th>Net Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyTableBody"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <!-- Compare Results -->
         <div class="compare-results" id="compareResults">
             <div class="results-header">
-                <h2>Head-to-Head Results</h2>
+                <h2 class="neon-text">Head-to-Head Results</h2>
                 <div class="results-actions">
                     <button class="btn btn-secondary" onclick="newComparison()">New Comparison</button>
                     <button class="btn btn-primary" onclick="openShareCompare()">Share Results</button>
@@ -1574,7 +1899,7 @@
         </div>
     </div>
 
-    <!-- Loading Screen -->
+    <!-- Loading Screen with 3D Animation -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-particles" id="loadingParticles"></div>
         <div class="loading-core">
@@ -1583,7 +1908,7 @@
             <div class="loading-ring"></div>
             <div class="loading-ring"></div>
         </div>
-        <div class="loading-text" id="loadingText">Running Simulation...</div>
+        <div class="loading-text neon-text" id="loadingText">Running Simulation...</div>
         <div class="loading-subtext" id="loadingSubtext">Analyzing market conditions</div>
         <div class="loading-progress">
             <div class="loading-bar"></div>
@@ -1609,11 +1934,11 @@
         <div class="share-content">
             <button class="close-modal" onclick="closeShare()">×</button>
             <div class="share-header">
-                <h3>Share Your Results</h3>
+                <h3 class="neon-text">Share Your Results</h3>
                 <p>Copy and share with friends or on social media</p>
             </div>
             <div class="share-preview" id="sharePreview">
-                <span class="watermark">SIMUHUSTLE.COM</span>
+                <span class="watermark">SIMHUSTLE.COM</span>
             </div>
             <div class="share-buttons">
                 <button class="share-btn primary" onclick="copyResults()">Copy to Clipboard</button>
@@ -1769,19 +2094,14 @@
             const formData = new FormData(form);
             const data = Object.fromEntries(formData.entries());
             ['weekly_hours', 'skill_level', 'starting_capital', 'ad_budget_per_month', 'price', 'cost'].forEach(key => {
-                data[key] = parseFloat(data[key]);
+                if (data[key]) data[key] = parseFloat(data[key]);
             });
             
             await new Promise(resolve => setTimeout(resolve, 6000));
             
             try {
-                const response = await fetch('/simulate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                const result = await response.json();
+                // Simulated API response
+                const result = simulateHustle(data);
                 loadingScreen.classList.remove('active');
                 
                 if (type === 'single') {
@@ -1796,6 +2116,59 @@
                 loadingScreen.classList.remove('active');
                 return null;
             }
+        }
+
+        // Simulated backend logic
+        function simulateHustle(data) {
+            const months = 6;
+            const monthly_results = [];
+            let current_capital = data.starting_capital;
+            let total_profit = 0;
+            
+            const baseConversion = 0.02 + (data.skill_level * 0.005);
+            const baseTraffic = data.ad_budget_per_month * (5 + Math.random() * 5);
+            
+            for (let i = 1; i <= months; i++) {
+                const growthFactor = 1 + (i * 0.1) + (data.skill_level * 0.05);
+                const traffic = Math.floor(baseTraffic * growthFactor * (0.8 + Math.random() * 0.4));
+                const conversion = baseConversion * (0.9 + Math.random() * 0.2);
+                const customers = Math.floor(traffic * conversion);
+                
+                let revenue, expenses;
+                
+                if (data.hustle === 'affiliate_marketing') {
+                    revenue = customers * data.price * data.cost;
+                    expenses = data.ad_budget_per_month + (data.weekly_hours * 10);
+                } else if (data.hustle === 'agency') {
+                    revenue = customers * data.price;
+                    expenses = (revenue * data.cost) + data.ad_budget_per_month;
+                } else if (['digital_products', 'online_course'].includes(data.hustle)) {
+                    revenue = customers * data.price * (1 - data.cost);
+                    expenses = data.ad_budget_per_month + (customers * 2);
+                } else {
+                    revenue = customers * data.price;
+                    expenses = (customers * data.cost) + data.ad_budget_per_month + (data.weekly_hours * 5);
+                }
+                
+                const net_profit = revenue - expenses;
+                current_capital += net_profit;
+                total_profit += net_profit;
+                
+                monthly_results.push({
+                    month: i,
+                    traffic,
+                    customers,
+                    revenue: Math.round(revenue),
+                    expenses: Math.round(expenses),
+                    net_profit: Math.round(net_profit)
+                });
+            }
+            
+            return {
+                monthly_results,
+                total_profit: Math.round(total_profit),
+                final_capital: Math.round(current_capital)
+            };
         }
 
         async function runComparison() {
@@ -1819,28 +2192,15 @@
             const dataB = Object.fromEntries(new FormData(formB).entries());
             
             ['weekly_hours', 'skill_level', 'starting_capital', 'ad_budget_per_month', 'price', 'cost'].forEach(key => {
-                dataA[key] = parseFloat(dataA[key]);
-                dataB[key] = parseFloat(dataB[key]);
+                if (dataA[key]) dataA[key] = parseFloat(dataA[key]);
+                if (dataB[key]) dataB[key] = parseFloat(dataB[key]);
             });
             
             await new Promise(resolve => setTimeout(resolve, 6000));
             
             try {
-                const [resA, resB] = await Promise.all([
-                    fetch('/simulate', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(dataA)
-                    }),
-                    fetch('/simulate', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(dataB)
-                    })
-                ]);
-                
-                const resultA = await resA.json();
-                const resultB = await resB.json();
+                const resultA = simulateHustle(dataA);
+                const resultB = simulateHustle(dataB);
                 
                 loadingScreen.classList.remove('active');
                 showCompareResults(resultA, dataA, resultB, dataB);
@@ -1857,7 +2217,7 @@
             
             const totalProfit = result.total_profit;
             const finalCapital = result.final_capital;
-            const roi = ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100);
+            const roi = inputs.starting_capital > 0 ? ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100) : 0;
             const breakEvenMonth = result.monthly_results.findIndex(m => m.net_profit > 0) + 1;
             
             const analysis = generateAnalysis(result, inputs);
@@ -1923,17 +2283,18 @@
             
             const profitA = resultA.total_profit;
             const profitB = resultB.total_profit;
-            const roiA = ((resultA.final_capital - inputsA.starting_capital) / inputsA.starting_capital * 100);
-            const roiB = ((resultB.final_capital - inputsB.starting_capital) / inputsB.starting_capital * 100);
+            const roiA = inputsA.starting_capital > 0 ? ((resultA.final_capital - inputsA.starting_capital) / inputsA.starting_capital * 100) : 0;
+            const roiB = inputsB.starting_capital > 0 ? ((resultB.final_capital - inputsB.starting_capital) / inputsB.starting_capital * 100) : 0;
             
             const winner = profitA > profitB ? 'A' : 'B';
             const winnerName = winner === 'A' ? inputsA.hustle.replace(/_/g, ' ') : inputsB.hustle.replace(/_/g, ' ');
             const loserName = winner === 'A' ? inputsB.hustle.replace(/_/g, ' ') : inputsA.hustle.replace(/_/g, ' ');
             const profitDiff = Math.abs(profitA - profitB);
-            const multiplier = Math.max(profitA, profitB) / Math.min(Math.abs(profitA), Math.abs(profitB) + 1);
+            const multiplier = Math.min(Math.abs(profitA), Math.abs(profitB)) > 0 ? 
+                (Math.max(Math.abs(profitA), Math.abs(profitB)) / Math.min(Math.abs(profitA), Math.abs(profitB))).toFixed(1) : '1.0';
             
             document.getElementById('winnerTitle').textContent = `${winnerName.toUpperCase()} WINS`;
-            document.getElementById('winnerSubtitle').textContent = `${multiplier.toFixed(1)}x more profitable than ${loserName} | +$${profitDiff.toLocaleString()} advantage`;
+            document.getElementById('winnerSubtitle').textContent = `${multiplier}x more profitable than ${loserName} | +$${profitDiff.toLocaleString()} advantage`;
             
             const breakEvenA = resultA.monthly_results.findIndex(m => m.net_profit > 0) + 1;
             const breakEvenB = resultB.monthly_results.findIndex(m => m.net_profit > 0) + 1;
@@ -2063,7 +2424,7 @@
         function generateAnalysis(result, inputs) {
             const totalProfit = result.total_profit;
             const finalCapital = result.final_capital;
-            const roi = ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100);
+            const roi = inputs.starting_capital > 0 ? ((finalCapital - inputs.starting_capital) / inputs.starting_capital * 100) : 0;
             const breakEvenMonth = result.monthly_results.findIndex(m => m.net_profit > 0) + 1;
             const avgMonthlyProfit = totalProfit / 6;
             
@@ -2102,7 +2463,7 @@
             factors = [
                 { 
                     label: 'Capital Efficiency', 
-                    value: (finalCapital / inputs.starting_capital).toFixed(2) + 'x',
+                    value: inputs.starting_capital > 0 ? (finalCapital / inputs.starting_capital).toFixed(2) + 'x' : 'N/A',
                     status: finalCapital > inputs.starting_capital * 1.5 ? 'positive' : finalCapital > inputs.starting_capital ? 'positive' : 'negative'
                 },
                 { 
@@ -2168,7 +2529,7 @@
         function openShare() {
             const { result, inputs, roi, breakEvenMonth, analysis } = window.simulationResult;
             
-            const shareText = `My SimuHustle 6-Month Projection
+            const shareText = `My SimHustle 6-Month Projection
 
 Hustle: ${inputs.hustle.replace(/_/g, ' ').toUpperCase()}
 Starting Capital: $${inputs.starting_capital.toLocaleString()}
@@ -2187,11 +2548,11 @@ ${result.monthly_results.map(m =>
     `M${m.month}: ${m.customers} customers | $${m.net_profit.toLocaleString()} profit`
 ).join('\n')}
 
-Simulate your hustle at SimuHustle.com`;
+Simulate your hustle at SimHustle.com`;
             
             document.getElementById('sharePreview').innerHTML = `
                 <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">${shareText}</pre>
-                <span class="watermark">SIMUHUSTLE.COM</span>
+                <span class="watermark">SIMHUSTLE.COM</span>
             `;
             
             document.getElementById('shareModal').classList.add('active');
@@ -2203,12 +2564,12 @@ Simulate your hustle at SimuHustle.com`;
             const winnerName = winner === 'A' ? inputsA.hustle.replace(/_/g, ' ') : inputsB.hustle.replace(/_/g, ' ');
             const loserName = winner === 'A' ? inputsB.hustle.replace(/_/g, ' ') : inputsA.hustle.replace(/_/g, ' ');
             
-            const shareText = `My SimuHustle Head-to-Head Comparison
+            const shareText = `My SimHustle Head-to-Head Comparison
 
 ${inputsA.hustle.replace(/_/g, ' ').toUpperCase()} vs ${inputsB.hustle.replace(/_/g, ' ').toUpperCase()}
 
 WINNER: ${winnerName.toUpperCase()}
-Advantage: ${multiplier.toFixed(1)}x more profitable
+Advantage: ${multiplier}x more profitable
 Profit Difference: +$${profitDiff.toLocaleString()}
 
 ${inputsA.hustle.replace(/_/g, ' ').toUpperCase()}:
@@ -2219,11 +2580,11 @@ ${inputsB.hustle.replace(/_/g, ' ').toUpperCase()}:
 Profit: ${resultB.total_profit >= 0 ? '+' : ''}$${resultB.total_profit.toLocaleString()}
 ROI: ${((resultB.final_capital - inputsB.starting_capital) / inputsB.starting_capital * 100).toFixed(1)}%
 
-Compare your hustles at SimuHustle.com`;
+Compare your hustles at SimHustle.com`;
             
             document.getElementById('sharePreview').innerHTML = `
                 <pre style="white-space: pre-wrap; margin: 0; font-family: inherit;">${shareText}</pre>
-                <span class="watermark">SIMUHUSTLE.COM</span>
+                <span class="watermark">SIMHUSTLE.COM</span>
             `;
             
             document.getElementById('shareModal').classList.add('active');
